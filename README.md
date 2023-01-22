@@ -155,6 +155,7 @@ Project planning guide. [^1]
     ```
 - [ ] API or Seed: Internal Steam Web API, minimum 1 user-created game
 - [ ] Resource RESTful routes:
+
 **Stretch Goals:**
 - [ ] 
  
