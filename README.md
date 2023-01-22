@@ -44,16 +44,54 @@ This is a full-stack Node application designed to help users discover and recomm
 
 ## Entity Relationship Diagrams
 ![erd](assets/ERD_v1.jpg) [^7]
-**Rough Description of Approach:** 
+
+#### Games
+| **URL**              | **HTTP Verb** |**Actions**|
+|----------------------|---------------|-----------|
+| /games/             | GET           | index
+| /games/:id          | GET           | show
+| /games/new          | GET           | new
+| /games              | POST          | create
+| /games/:id/edit     | GET           | edit
+| /games/:id          | PATCH/PUT     | update
+| /games/:id          | DELETE        | destroy   |
+
+#### Steam games route
+| **URL**              | **HTTP Verb** |**Actions**|
+|----------------------|---------------|-----------|
+| /store/             | GET           | index      |
+
+#### ratings
+
+| **URL**              | **HTTP Verb** |**Actions**|
+|----------------------------------------|---------------|-----------|
+| /ratings/:gameId                     | POST          | create
+| /ratings/delete/:gameID/:ratingId   | DELETE        | destroy   |
+
+#### comments
+
+| **URL**              | **HTTP Verb** |**Actions**|
+|----------------------------------------|---------------|-----------|
+| /comments/:gameId                     | POST          | create
+| /comments/delete/:gameID/:commentId   | DELETE        | destroy   |
+
+#### Users
+
+| **URL**              | **HTTP Verb** |**Actions**|
+|----------------------|---------------|-----------|
+| /users/signup        | GET           | new    
+| /users/signup        | POST          | create    
+| /users/signup        | GET           | login   
+| /users/login         | POST          | create
+| /users/logout        | DELETE        | destroy   |
+
+## Approach taken
+**Rough Draft Description of Approach:** 
 - On the Steam store screen, an API call will get a filtered list of Steam games to display as cards in the views. 
 - Users can "save" the game to their personal profile if they haven't already been saved, or can view the steamee game card, which will contain user ratings entered on steamee, how many users have saved it. If the user wants to dig deeper, they will with view (show route) the game and be able to see user comments. 
 - When users save the game, a document will be created from the Game model.
 (diagrams that describe the relationships between your resources)
 - Eventually, the steamee view-all page will contain other games added by users, in addition to the ones that were saved directly from the steam store API call.
-
-(route tables?)
-
-## Approach taken
 - Example API Call: https://store.steampowered.com/search/results/?filter=category3=39&tags=3841&ignore_preferences=1&sort_by=Reviews_DESC&supportedlang=english&json=1
     - shared/split screen (category3=39)
     - local co-op tag (tags=3841)
