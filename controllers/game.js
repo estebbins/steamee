@@ -1,6 +1,8 @@
 // Import Dependencies
 const express = require('express')
 const Game = require('../models/game')
+require('dotenv').config()
+const axios = require('axios')
 
 // Create router
 const router = express.Router()
@@ -33,6 +35,14 @@ router.get('/', (req, res) => {
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
+})
+
+router.get('/store', async (req, res) => {
+    console.log('url', process.env.STEAM_STORE_URL)
+    const searchResult = await axios(`${process.env.STEAM_STORE_URL}?filter=category3=39&tags=3841&ignore_preferences=1&sort_by=Reviews_DESC&supportedlang=english&json=1`)
+    console.log('storeGames', searchResult.data.items)
+    const storeGames = searchResult.data.items
+    res.render('games/store', { storeGames, ...req.session })
 })
 
 // index that shows only the user's games

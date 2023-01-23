@@ -1,7 +1,7 @@
 {% block content %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
-        <a href="/" class="navbar-brand">Examplr</a>
+        <a href="/" class="navbar-brand">steamee</a>
         {% if loggedIn %}
         <a href="/games/mine" class="nav-link text-light">Hello {{ username }} </a>
         {% endif %}
@@ -11,6 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             {% if loggedIn %}
                 <a href="/games" class="nav-link text-light">View All</a>
+                <a href="/games/store" class="nav-link text-light">View Store</a>
                 <a href="/games/new" class="nav-link text-light">New</a>
                 <a href="/games/mine" class="nav-link text-light">My Games</a>
                 <a href="/auth/logout" class="nav-link text-light">Log Out</a>
