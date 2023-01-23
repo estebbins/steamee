@@ -75,15 +75,13 @@ This is a full-stack Node application designed to help users discover and recomm
 | /comments/:gameId                     | POST          | create
 | /comments/delete/:gameID/:commentId   | DELETE        | destroy   |
 
-#### Users
+#### Authentication: Users
 
-| **URL**              | **HTTP Verb** |**Actions**|
-|----------------------|---------------|-----------|
-| /users/signup        | GET           | new    
-| /users/signup        | POST          | create    
-| /users/signup        | GET           | login   
-| /users/login         | POST          | create
-| /users/logout        | DELETE        | destroy   |
+| **URL**              | **HTTP Verb** |**Actions**|**Controller#Action**|
+|----------------------|---------------|-----------|---------------------|
+| /auth/signup         | POST          | new       | users#signup
+| /auth/login          | POST          | create    | users#login
+| /auth/logout         | DELETE        | destroy   | users#logout        |
 
 ## Approach taken
 **Rough Draft Description of Approach:** 
@@ -328,18 +326,20 @@ Project planning guide. [^1]
 
 ### Project Planning
 **Sprint 1 (Est completion 1/23/23):**
-- [ ] Develop project pitch (1/20/23-1/23/23)
-- [ ] Create README.md file with project plannings steps
-- [ ] Gain project approval (1/23/23)
+- [x] Develop project pitch (1/20/23-1/23/23)
+- [x] Create README.md file with project plannings steps
+- [x] Gain project approval (1/23/23)
 
 **Sprint 2 (Est completion 1/23/23):**
-- [ ] Review mongoose-express-liquid-boilerplate documentation [^3]
-- [ ] Follow boilerplate installation instructions [^3]
-- [ ] Install other dependencies as needed
+- [x] Review mongoose-express-liquid-boilerplate documentation [^3]
+- [x] Follow boilerplate installation instructions [^3]
+- [x] Install other dependencies as needed
 - [ ] Ensure API functioning properly from template
 - [ ] Begin model 1 build 
 - [ ] Seed database and/or incoporate API
 - [ ] Create Index & Show Routes & test in Postman
+- [ ] Question - would it be better to store data from an API call for next time, or do the API calls?
+- [ ] Question - fully define the model or modify later?
 
 **Sprint 3 (Est completion 1/25/23):**
 - [ ] Adjust seed route to script if necessary

@@ -1,9 +1,10 @@
 // import what I need
 const { Schema, model } = require('./connection.js')
 
+const savedGameSchema = require('./savedGames')
+
 // create the schema
-const UserSchema = new Schema(
-	{
+const UserSchema = new Schema({
 		username: { 
 			type: String, 
 			required: true, 
@@ -12,10 +13,11 @@ const UserSchema = new Schema(
 		password: { 
 			type: String, 
 			required: true 
-		}
-	},
-	{ timestamps: true }
-)
+		},
+        savedGame: [savedGameSchema]
+	}, { 
+        timestamps: true 
+})
 
 // creat the model
 const User = model('User', UserSchema)

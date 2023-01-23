@@ -1,7 +1,7 @@
 {
   "name": "steamee-app",
   "version": "1.0.0",
-  "description": "==link to live site==",
+  "description": "This is a full-stack Node application designed to help users discover and recommend local co-op games available on Steam or other platforms. All too frequently, couples, friends, or just any two strangers in a room, scour the internet for good local co-op games, just to find the same three websites, recommending the same handful of games they've already played! It's time to get steamee!",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
