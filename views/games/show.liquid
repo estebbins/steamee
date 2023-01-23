@@ -1,0 +1,26 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+<div class="container-md">
+    <article>
+        <h2>
+            {{ game.title }} -
+            {% if game.ready %}
+            Ready
+            {% else %}
+            Not Ready
+            {%endif%}
+        </h2>
+        <h3>Amount: {{ game.amount }}</h3>
+        <h6>Body: {{ game.body }}</h6>
+        {% if game.owner == userId %}
+        <div class="btn-group">
+
+            <a href="/games/{{ game.id }}/edit" class="btn btn-primary">Edit</a>
+            <form action="/games/{{ game.id }}?_method=DELETE" method="POST">
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+        </div>
+        {% endif %}
+    </article>
+</div>
+{% endblock %}

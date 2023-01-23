@@ -3,7 +3,7 @@
 ==link to live site==
 
 ## Overview
-This is a full-stack Node application designed to help users discover and recommend local co-op games available on Steam. All too frequently, couples, friends, or just any two strangers in a room, scour the internet for good local co-op games, just to find the same three websites, recommending the same handful of games they've already played! It's time to get steamee!
+This is a full-stack Node application designed to help users discover and recommend local co-op games available on Steam or other platforms. All too frequently, couples, friends, or just any two strangers in a room, scour the internet for good local co-op games, just to find the same three websites, recommending the same handful of games they've already played! It's time to get steamee!
 
 ### Technologies Used:
 - Mongoose
@@ -99,6 +99,157 @@ This is a full-stack Node application designed to help users discover and recomm
     - english games (supportedlang=english)
     - json format (json=1)
     - preferences ignored (ignore_preferences=1)
+RESULTS:
+```
+"desc": "",
+    "items": [
+        {
+            "name": "Rhythm of the Night",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/bundles/23200/6lbanfr9qo1lpmt7/capsule_sm_120.jpg?t=1634705480"
+        },
+        {
+            "name": "Rhythm Doctor",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/774181/capsule_sm_120.jpg?t=1667332753"
+        },
+        {
+            "name": "Left 4 Dead Bundle",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/bundles/233/38smshw5fjvh9vp4/capsule_sm_120.jpg?t=1456861419"
+        },
+        {
+            "name": "Left 4 Dead 2",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/550/capsule_sm_120.jpg?t=1666824129"
+        },
+        {
+            "name": "The Binding of Isaac: Rebirth",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/250900/capsule_sm_120.jpg?t=1617174663"
+        },
+        {
+            "name": "BattleBlock Theater®",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/238460/capsule_sm_120.jpg?t=1671827860"
+        },
+        {
+            "name": "Broforce",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/274190/capsule_sm_120.jpg?t=1666986997"
+        },
+        {
+            "name": "Everhood + Rhythm Doctor",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/bundles/26852/zqb8h9sjtgo6v5xg/capsule_sm_120.jpg?t=1656112311"
+        },
+        {
+            "name": "Duck Game",
+            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/312530/capsule_sm_120.jpg?t=1606522299"
+        },...
+```
+- STRETCH GOAL: Users can enter their own games, and if they include a steam id (found in the url of the game's store page after app/NNNNNNN, an API call using the GET /broadcast/ajaxgetbatchappcapsuleinfo will link in other information about the game. Example store page url: https://store.steampowered.com/app/312530/Duck_Game/
+- Example API Call: https://store.steampowered.com/broadcast/ajaxgetbatchappcapsuleinfo?appids=312530&cc=NL&l=english&origin=https:%2F%2Fstore.steampowered.com
+RESULTS:
+```
+{
+    "apps": [
+        {
+            "appid": 312530,
+            "type": "game",
+            "title": "Duck Game",
+            "capsule": "312530/header.jpg?t=1606522299",
+            "main_capsule": "312530/capsule_616x353.jpg?t=1606522299",
+            "tiny_capsule": "312530/capsule_sm_120.jpg?t=1606522299",
+            "subid": 47116,
+            "orig_price_in_cents": 1299,
+            "orig_price": "",
+            "price_in_cents": 1299,
+            "price": "12,99€",
+            "is_free": false,
+            "free_weekend_label": "",
+            "library_asset": "312530/library_600x900.jpg?t=1606522299",
+            "discount_percent": 0,
+            "rt_release_date": 1433437184,
+            "release": "4 Jun, 2015",
+            "reviews_filtered": {
+                "num_reviews": 22305,
+                "num_positive": 21661,
+                "score": 9,
+                "label": "Overwhelmingly Positive"
+            },
+            "reviews_unfiltered": {
+                "num_reviews": 22305,
+                "num_positive": 21661,
+                "score": 9,
+                "label": "Overwhelmingly Positive"
+            },
+            "content_descriptors": [],
+            "available_windows": true,
+            "available_mac": false,
+            "available_linux": false,
+            "screenshot_list": [
+                "312530/ss_e0d4c29f0c6b93903916d35ec79ea5f2560932d5.jpg?t=1606522299",
+                "312530/ss_6da6723e0908f866142d69cebb5c13ec60063cab.jpg?t=1606522299",
+                "312530/ss_b20f323e1d27e4573a2afae3f4db9021da89dd3c.jpg?t=1606522299",
+                "312530/ss_250bcab1b9bbb209bf90ef4fe3a3178e4a33e184.jpg?t=1606522299"
+            ],
+            "microtrailer": "https://cdn.akamai.steamstatic.com/steam/apps/2039860/microtrailer.webm?t=1447375811",
+            "microtrailer_mp4": "https://cdn.akamai.steamstatic.com/steam/apps/2039860/microtrailer.mp4?t=1447375811",
+            "button_action": "Add to Cart",
+            "tags": [
+                {
+                    "name": "Multiplayer",
+                    "tagid": 3859
+                },
+                {
+                    "name": "Funny",
+                    "tagid": 4136
+                },
+                {
+                    "name": "Pixel Graphics",
+                    "tagid": 3964
+                },
+                {
+                    "name": "Local Multiplayer",
+                    "tagid": 7368
+                },
+                {
+                    "name": "Action",
+                    "tagid": 19
+                },
+                {
+                    "name": "2D",
+                    "tagid": 3871
+                },
+                {
+                    "name": "4 Player Local",
+                    "tagid": 4840
+                },
+                {
+                    "name": "Platformer",
+                    "tagid": 1625
+                },
+                {
+                    "name": "Indie",
+                    "tagid": 492
+                },
+                {
+                    "name": "Fast-Paced",
+                    "tagid": 1734
+                }
+            ],
+            "app_to_run": 312530,
+            "coming_soon": false,
+            "early_access": false,
+            "no_main_cap": false,
+            "required_age": 0,
+            "support_vrhmd": false,
+            "support_vrhmd_only": false,
+            "creator_clan_ids": [
+                5635894
+            ],
+            "localized_langs": [
+                0
+            ],
+            "deck_compatibility_category": 3
+        }
+    ],
+    "success": 1
+}
+```
 
 ## Installation instructions
 ## Unsolved problems
