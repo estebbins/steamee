@@ -2,6 +2,11 @@
 {% block content %}
 <div class="container-sm">
     <form action="/games" method="POST">
+
+        {% if storeId %}
+            {{ storeId }}
+        {% endif %}
+        {%-comment-%}
         <fieldset>
             <legend>Create New Game</legend>
             <label class="form-label">Title: </label>
@@ -31,6 +36,7 @@
                 class="form-check-input"
             >
         </fieldset>
+        {%-endcomment-%}
         <input type="submit" value="Create New Game" class="btn btn-success">
     </form>
 </div>

@@ -25,7 +25,8 @@ const gameSchema = new Schema({
             default: 'video game'
         },
         steamId: {
-            type: Number
+            type: Number,
+            unique: true
         },
         ratings: [ratingSchema],
         comments: [commentSchema],

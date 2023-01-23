@@ -37,11 +37,18 @@ router.get('/', (req, res) => {
 		})
 })
 
+// Index that shows the user's game
 router.get('/store', async (req, res) => {
     console.log('url', process.env.STEAM_STORE_URL)
+    // filtered search result from 
     const searchResult = await axios(`${process.env.STEAM_STORE_URL}?filter=category3=39&tags=3841&ignore_preferences=1&sort_by=Reviews_DESC&supportedlang=english&json=1`)
     console.log('storeGames', searchResult.data.items)
     const storeGames = searchResult.data.items
+    // extract app or bundle id from the logo url
+    storeGames.forEach(storeGame => {
+        let logoArray = storeGame.logo.split('/')
+        storeGame.storeId = logoArray[5]
+    })
     res.render('games/store', { storeGames, ...req.session })
 })
 
@@ -58,10 +65,23 @@ router.get('/mine', (req, res) => {
 		})
 })
 
+router.get('/:id/new', (req, res) => {
+    if (req.params.id) {
+        const storeId = req.params.id
+        res.render(`games/new`, { storeId, ...req.session })
+    } else {
+	    res.render('games/new', { ...req.session })
+    }
+})
+
 // new route -> GET route that renders our page with the form
 router.get('/new', (req, res) => {
-	const { username, userId, loggedIn } = req.session
-	res.render('games/new', { username, loggedIn })
+    if (req.query) {
+        const storeId = req.query
+        res.render(`games/new/${storeId}`, { ...req.session })
+    } else {
+	    res.render('games/new', { ...req.session })
+    }
 })
 
 // create -> POST route that actually calls the db and makes a new document

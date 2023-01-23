@@ -3,10 +3,10 @@
 <div>
     <h2 class="display-6">All Games</h2>
     <div class="row">
-        {% for game in storeGames %}
+        {% for storeGame in storeGames %}
         <div class="card" style="width: 18rem;">
-            <h5 class="card-header">{{ game.name }}</h5>
-            <img src="{{ game.logo }}" alt="{{ game.name }} logo or image">
+            <h5 class="card-header">{{ storeGame.name }}</h5>
+            <img src="{{ storeGame.logo }}" alt="{{ storeGame.name }} logo or image">
             <div class="card-body">
                 <h5 class="card-title">
                     Ready?:
@@ -17,8 +17,8 @@
                 <p class="card-text">
                     Amount: 
                 </p>
-                <a href="/games/" class="btn btn-info">
-                    View {{ game.name }}
+                <a href="/games/{{ storeGame.storeId }}/new" class="btn btn-info">
+                    Save {{ storeGame.name }}
                 </a>
             </div>
         </div>
