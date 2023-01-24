@@ -306,7 +306,7 @@ Project planning guide. [^1]
 - [ ] Resource RESTful routes:
 
 **Stretch Goals:**
-- [ ] 
+- [ ] Users can add new games to the db
  
 **Technical Requirements:**
 - [ ] Have at least 2 models, not including user (subdocument permitted)
@@ -334,16 +334,16 @@ Project planning guide. [^1]
 - [x] Review mongoose-express-liquid-boilerplate documentation [^3]
 - [x] Follow boilerplate installation instructions [^3]
 - [x] Install other dependencies as needed
-- [ ] Ensure API functioning properly from template
-- [ ] Begin model 1 build 
-- [ ] Seed database and/or incoporate API
+- [x] Ensure API functioning properly from template
+- [x] Begin model 1 build 
+- [x] Seed database and/or incoporate API
 - [ ] Create Index & Show Routes & test in Postman
 - [ ] Question - would it be better to store data from an API call for next time, or do the API calls?
 - [ ] Question - fully define the model or modify later?
 
 **Sprint 3 (Est completion 1/25/23):**
 - [ ] Adjust seed route to script if necessary
-- [ ] Create user model
+- [x] Create user model
 - [ ] Complete model 1 5 RESTful routes & test in Postman ( - new & edit to be completed)
 - [ ] Create model 2/subdocument
 - [ ] Create user & model 2 routes, and test in Postman

@@ -39,16 +39,34 @@ router.get('/', (req, res) => {
 
 // Index that shows the user's game
 router.get('/store', async (req, res) => {
-    console.log('url', process.env.STEAM_STORE_URL)
+    // console.log('url', process.env.STEAM_STORE_URL)
     // filtered search result from 
     const searchResult = await axios(`${process.env.STEAM_STORE_URL}?filter=category3=39&tags=3841&ignore_preferences=1&sort_by=Reviews_DESC&supportedlang=english&json=1`)
-    console.log('storeGames', searchResult.data.items)
+    // console.log('storeGames', searchResult.data.items)
     const storeGames = searchResult.data.items
-    // extract app or bundle id from the logo url
-    storeGames.forEach(storeGame => {
-        let logoArray = storeGame.logo.split('/')
-        storeGame.storeId = logoArray[5]
-    })
+    // let numApp = 0
+    // extract app id from the logo url & exclude bundles
+    for (let i=0; i < storeGames.length; i++) {
+        let logoArray = storeGames[i].logo.split('/')
+        storeGames[i].storeId = logoArray[5]
+        if (logoArray[4] != 'apps') {
+            storeGames[i].apps = false
+        } else {
+            storeGames[i].apps = true
+            // numApp++
+        }
+    }   
+    // console.log('storeGames', storeGames)
+    // console.log("numApp", numApp)
+    // Remove any items that are not apps
+    for (let i=0; i < storeGames.length; i++) {
+        if (storeGames[i].apps != true) {
+            storeGames.splice(i, 1)
+            i=0
+        }
+    }
+    // console.log('after storeGames', storeGames)
+    // console.log('length', storeGames.length)
     res.render('games/store', { storeGames, ...req.session })
 })
 
@@ -65,9 +83,10 @@ router.get('/mine', (req, res) => {
 		})
 })
 
-router.get('/:id/new', (req, res) => {
+router.get('/:id/new', async (req, res) => {
     if (req.params.id) {
         const storeId = req.params.id
+        const storeInfo = await axios(`${process.env.STEAM_APP_URL}${storeId}/&origin=https:%2F%2Fstore.steampowered.com`)
         res.render(`games/new`, { storeId, ...req.session })
     } else {
 	    res.render('games/new', { ...req.session })
@@ -76,12 +95,7 @@ router.get('/:id/new', (req, res) => {
 
 // new route -> GET route that renders our page with the form
 router.get('/new', (req, res) => {
-    if (req.query) {
-        const storeId = req.query
-        res.render(`games/new/${storeId}`, { ...req.session })
-    } else {
-	    res.render('games/new', { ...req.session })
-    }
+	res.render('games/new', { ...req.session })
 })
 
 // create -> POST route that actually calls the db and makes a new document
