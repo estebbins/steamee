@@ -86,8 +86,10 @@ router.get('/mine', (req, res) => {
 router.get('/:id/new', async (req, res) => {
     if (req.params.id) {
         const storeId = req.params.id
-        const storeInfo = await axios(`${process.env.STEAM_APP_URL}${storeId}/&origin=https:%2F%2Fstore.steampowered.com`)
-        res.render(`games/new`, { storeId, ...req.session })
+        const storeInfo = await axios(`${process.env.STEAM_APP_URL}${storeId}&origin=https:%2F%2Fstore.steampowered.com`)
+        const gameInfo = storeInfo.data.apps[0]
+        console.log(gameInfo)
+        res.render(`games/new`, { storeId, gameInfo, ...req.session })
     } else {
 	    res.render('games/new', { ...req.session })
     }
