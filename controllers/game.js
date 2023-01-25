@@ -1,6 +1,7 @@
 // Import Dependencies
 const express = require('express')
 const Game = require('../models/game')
+const User = require('../models/user')
 require('dotenv').config()
 const axios = require('axios')
 
@@ -46,6 +47,7 @@ router.get('/store', async (req, res) => {
     const storeGames = searchResult.data.items
     // let numApp = 0
     // extract app id from the logo url & exclude bundles
+    console.log(storeGames)
     for (let i=0; i < storeGames.length; i++) {
         let logoArray = storeGames[i].logo.split('/')
         storeGames[i].storeId = logoArray[5]
@@ -102,14 +104,35 @@ router.get('/new', (req, res) => {
 
 // create -> POST route that actually calls the db and makes a new document
 router.post('/', (req, res) => {
-	req.body.ready = req.body.ready === 'on' ? true : false
-
 	req.body.owner = req.session.userId
+    // req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
+    // const savedGameData = req.body
+    // console.log(req.body)
 	Game.create(req.body)
-		.then(game => {
-			console.log('this was returned from create', game)
-			res.redirect('/games')
-		})
+        // .then(game =>  { console.log('this was returned from create', game)})
+        // .then(game => {
+        //     User.findById(savedGameData.owner)
+        //         .populate('savedGame')
+        //         .then(user => {
+        //             // user.savedGame.gameId = game.id
+        //                 // user.savedGame.author = req.body.owner
+        //             // user.savedGame.hasPlayed = savedGameData.hasPlayed
+        //             console.log('this was returned user update', user.savedGame)
+        //             // res.render(`/savedGames/${game.id}`)
+        //             return user.save()
+        //         })
+        //         .then(user => {
+        //             res.redirect('/games')
+        //         })
+        //         .catch(error => {
+        //             res.redirect(`/error?error=${error}`)
+        //         })
+        //     // next()
+        // })
+        .then(game => {
+            console.log('session', req.session)
+            res.render('auth/savedGame', { game, ...req.session })
+        })
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})

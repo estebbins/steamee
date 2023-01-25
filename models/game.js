@@ -9,7 +9,7 @@ const User = require('./user')
 // destructure the schema and model constructors from mongoose
 const { Schema, model } = mongoose
 const ratingSchema = require('./ratings')
-const commentSchema = require('./comments.js')
+const commentSchema = require('./comments')
 
 const gameSchema = new Schema({
 		title: { 

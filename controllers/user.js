@@ -13,6 +13,18 @@ const router = express.Router()
 
 // Routes
 
+router.get('/viewusers', (req, res) => {
+	User.find({})
+        .populate('username', '-password')
+		.then(users => {
+            res.send(users)			
+			// res.render('auth/index', { users })
+		})
+		.catch(error => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
+
 // GET to render the signup form
 router.get('/signup', (req, res) => {
 	res.render('auth/signup')

@@ -1,7 +1,7 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-sm">
-    <form action="/games" method="POST"></form>
+    <form action="/games" method="POST">
         <fieldset>
             <legend>Create New Game</legend>
             <label class="form-label">Title: </label>
@@ -34,14 +34,6 @@
                 class="form-control"
                 value="{{ gameInfo.appid }}"
             >
-            {%-comment-%}
-            <label class="form-label">Have Played:</label>
-            <input 
-                type="checkbox" 
-                name="ready" 
-                class="form-check-input"
-            >
-            {%-endcomment-%}
         </fieldset>
         <input type="submit" value="Save Game" class="btn btn-success">
     </form>

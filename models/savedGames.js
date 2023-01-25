@@ -13,13 +13,12 @@ const { Schema } = mongoose
 const savedGameSchema = new Schema ({
     gameId: {
         type: Schema.Types.ObjectId,
-        ref: 'Game'
+        ref: 'Game',
+        required: true
     },
     hasPlayed: {
         type: Boolean,
         required: true,
-        min: 0,
-        max: 5
     }, 
     author: {
         type: Schema.Types.ObjectId, 
