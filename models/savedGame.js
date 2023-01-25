@@ -7,7 +7,7 @@ const mongoose = require ('./connection')
 //// Our Schema for the Rating subdocument       ////
 /////////////////////////////////////////////////////
 // We'll destructure the schema function from mongoose
-const { Schema } = mongoose
+const { Schema, model } = mongoose
 
 // saved game schema
 const savedGameSchema = new Schema ({
@@ -35,7 +35,7 @@ const savedGameSchema = new Schema ({
 })
 
 // create the model
-const SavedGame = model('SavedGames', savedGameSchema)
+const SavedGame = model('SavedGame', savedGameSchema)
 
 /////////////////////////////////////////////////////
 //// Export our schema                           ////

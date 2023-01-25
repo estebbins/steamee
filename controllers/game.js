@@ -134,13 +134,12 @@ router.get('/new', (req, res) => {
 router.post('/', (req, res) => {
     // !Set the owner equal to the session userID
 	req.body.owner = req.session.userId
-    // !req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
 	Game.create(req.body)
         .then(game => {
             // console.log('session', req.session)
             // console.log('game', game)
             // Redirect to savedGames including a paramater of the game's id
-            res.redirect(`/savedGames/${game.id}`)
+            res.redirect(`/savedGames/${game.id}/new`)
         })
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)

@@ -29,14 +29,12 @@ app.use('/comments', CommentRouter)
 app.use('/savedGames', SavedGameRouter)
 
 app.get('/', (req, res) => {
-    const { username, userId, loggedIn } = req.session
-	res.render('home.liquid', { loggedIn, username, userId })
+	res.render('home.liquid', { ...req.session })
 })
 
 app.get('/error', (req, res) => {
 	const error = req.query.error || 'This Page Does Not Exist'
-    const { username, loggedIn, userId } = req.session
-	res.render('error.liquid', { error, username, loggedIn, userId })
+	res.render('error.liquid', { error, ...req.session })
 })
 
 // if page is not found, send to error page
