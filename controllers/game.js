@@ -32,7 +32,7 @@ router.use((req, res, next) => {
 //// Routes                                      ////
 /////////////////////////////////////////////////////
 
-// INDEX - GET route - Steamee Recommendations
+// INDEX - GET - Steamee Recommendations
 // Index ALL recommended games stored to database
 router.get('/', (req, res) => {
 	Game.find({})
@@ -47,7 +47,7 @@ router.get('/', (req, res) => {
 		})
 })
 
-// INDEX - GET route - Game Store Query
+// INDEX - GET - Game Store Query
 // Index ALL games from Steam API Call
 router.get('/store', async (req, res) => {
     // Steam API call (filtered search results)
@@ -96,6 +96,9 @@ router.get('/store', async (req, res) => {
 router.get('/mine', (req, res) => {
     // Find owner of game
 	Game.find({ owner: req.session.userId })
+        // !Might need to populate (below from class app)
+        // !.populate('owner', 'username')
+        // !.populate('comments.author', '-password')
 		.then(games => {
             // Render games/index liquid view, and include destructured session info
 			res.render('games/index', { games, ...req.session })
@@ -105,8 +108,9 @@ router.get('/mine', (req, res) => {
 		})
 })
 
-// NEW - GET
+// NEW - GET - With Steam Info
 // New route that renders that feeds additional information from a separate API Call to the new form when recommending from the store page
+// ! Need to handle duplicate/error message is confusing
 router.get('/:storeId/new', async (req, res) => {
     // Save store id (from store.liquid via store index route)
     const storeId = req.params.storeId
@@ -115,7 +119,7 @@ router.get('/:storeId/new', async (req, res) => {
     // gameInfo within data.apps[0] - 1:1 relationship from all testing
     const gameInfo = storeInfo.data.apps[0]
     // console.log('game info', gameInfo)
-    // render games/new with thhe store Id, game info and session info destructured
+    // render games/new with the store Id, game info and session info destructured
     res.render(`games/new`, { storeId, gameInfo, ...req.session })
 })
 
@@ -128,48 +132,31 @@ router.get('/new', (req, res) => {
 // CREATE - POST
 // create -> POST route that actually calls the db and makes a new document
 router.post('/', (req, res) => {
+    // !Set the owner equal to the session userID
 	req.body.owner = req.session.userId
-    // req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
-    // const savedGameData = req.body
-    // console.log(req.body)
+    // !req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
 	Game.create(req.body)
-        // .then(game =>  { console.log('this was returned from create', game)})
-        // .then(game => {
-        //     User.findById(savedGameData.owner)
-        //         .populate('savedGame')
-        //         .then(user => {
-        //             // user.savedGame.gameId = game.id
-        //                 // user.savedGame.author = req.body.owner
-        //             // user.savedGame.hasPlayed = savedGameData.hasPlayed
-        //             console.log('this was returned user update', user.savedGame)
-        //             // res.render(`/savedGames/${game.id}`)
-        //             return user.save()
-        //         })
-        //         .then(user => {
-        //             res.redirect('/games')
-        //         })
-        //         .catch(error => {
-        //             res.redirect(`/error?error=${error}`)
-        //         })
-        //     // next()
-        // })
         .then(game => {
-            console.log('session', req.session)
-            console.log('game', game)
+            // console.log('session', req.session)
+            // console.log('game', game)
+            // Redirect to savedGames including a paramater of the game's id
             res.redirect(`/savedGames/${game.id}`)
-            // res.render('auth/savedGame', { game, ...req.session })
         })
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
 
+// EDIT - GET
 // edit route -> GET that takes us to the edit form view
-router.get('/:id/edit', (req, res) => {
+router.get('/:gameId/edit', (req, res) => {
 	// we need to get the id
-	const gameId = req.params.id
+	const gameId = req.params.gameId
+    // Find the game
 	Game.findById(gameId)
 		.then(game => {
+            // Render the edit page
+            // !Do we need the req.session info?
 			res.render('games/edit', { game })
 		})
 		.catch((error) => {
@@ -177,13 +164,16 @@ router.get('/:id/edit', (req, res) => {
 		})
 })
 
-// update route
-router.put('/:id', (req, res) => {
-	const gameId = req.params.id
-	req.body.ready = req.body.ready === 'on' ? true : false
 
+// UPDATE - PUT
+// update route
+router.put('/:gameId', (req, res) => {
+	const gameId = req.params.gameId
+    // Find the game and update it using the req.body
+    // ! Might need to duplicate within saved games controller as well/put parameters on this
 	Game.findByIdAndUpdate(gameId, req.body, { new: true })
 		.then(game => {
+            // Redirect to show route after game updated
 			res.redirect(`/games/${game.id}`)
 		})
 		.catch((error) => {
@@ -191,11 +181,13 @@ router.put('/:id', (req, res) => {
 		})
 })
 
-// show route
-router.get('/:id', (req, res) => {
-	const gameId = req.params.id
+// SHOW - GET
+// show route to show one game
+router.get('/:gameId', (req, res) => {
+	const gameId = req.params.gameId
 	Game.findById(gameId)
 		.then(game => {
+            // Render show.liquid, and include the game & session data destructured
 			res.render('games/show', { game, ...req.session })
 		})
 		.catch((error) => {
@@ -203,11 +195,14 @@ router.get('/:id', (req, res) => {
 		})
 })
 
-// delete route
-router.delete('/:id', (req, res) => {
-	const gameId = req.params.id
+// DELETE - DELETE
+// delete route to delete a single game
+router.delete('/:gameId', (req, res) => {
+	const gameId = req.params.gameId
+    // Find game & delete
 	Game.findByIdAndRemove(gameId)
 		.then(game => {
+            // Redirect to index
 			res.redirect('/games')
 		})
 		.catch(error => {
@@ -215,5 +210,7 @@ router.delete('/:id', (req, res) => {
 		})
 })
 
-// Export the Router
+/////////////////////////////////////////////////////
+//// Create router                               ////
+/////////////////////////////////////////////////////
 module.exports = router
