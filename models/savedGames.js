@@ -9,27 +9,35 @@ const mongoose = require ('./connection')
 // We'll destructure the schema function from mongoose
 const { Schema } = mongoose
 
-// rating schema
+// saved game schema
 const savedGameSchema = new Schema ({
-    gameId: {
+    owner: {
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true
+    },
+    savedGameId: {
         type: Schema.Types.ObjectId,
         ref: 'Game',
+        required: true
+    },
+    userCollection: {
+        type: String, 
+        default: 'My Saved Games',
         required: true
     },
     hasPlayed: {
         type: Boolean,
         required: true,
     }, 
-    author: {
-        type: Schema.Types.ObjectId, 
-        ref: 'User', 
-        required: true
-    }
     }, {
     timestamps: true
 })
 
+// create the model
+const SavedGame = model('SavedGames', savedGameSchema)
+
 /////////////////////////////////////////////////////
 //// Export our schema                           ////
 /////////////////////////////////////////////////////
-module.exports = savedGameSchema
+module.exports = SavedGame

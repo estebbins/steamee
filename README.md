@@ -371,6 +371,9 @@ Project planning guide. [^1]
 - [ ] Present deliverable to SEI Cohort & Instructors
 - [ ] Update documentation to incorporate feedback and development opportunities
 
+**Other Links**
+- https://api-docs.igdb.com/#getting-started
+
 [^1]: https://git.generalassemb.ly/sei-ec-remote/planning-projects
 [^2]: https://git.generalassemb.ly/sei-ec-remote/project_2
 [^3]: https://git.generalassemb.ly/sei-ec-remote/mongoose-express-liquid-boilerplate

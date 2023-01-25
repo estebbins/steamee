@@ -15,7 +15,14 @@ const router = express.Router()
 /////////////////////////////////////////////////////
 // This also means, that when we make a subdocumrnt, we must MUST refer to the parent so that mongoose knows where in mongodb to store this subdocument.
 
-router.post('/addGame', (res, req) => {
+router.get('/:docId', (req, res) => {
+    // console.log(req.params)
+    // console.log('params id', req.params.docId)
+    const docId = req.params.docId
+    res.render('auth/savedGame', { docId, ...req.session })
+})
+
+router.post('/addGame', (req, res) => {
     console.log('session', req.session)
     console.log(userId)
     console.log(game.title)
