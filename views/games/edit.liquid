@@ -3,39 +3,38 @@
 <div class="container-sm">
     <form action="/games?_method=PUT" method="POST">
         <fieldset>
-            <legend>Create New Game</legend>
-            <label class="form-label">Title: </label>
-            <input 
-                type="text" 
-                name="title" 
-                placeholder="{{ game.title }}"
-                value="{{ game.title }}"
-                class="form-control"
-            >
-            <label class="form-label">Body:</label>
-            <input 
-                type="text" 
-                name="body" 
-                placeholder="{{ game.body }}" 
-                value="{{ game.body }}" 
-                class="form-control"
-            >
-            <label class="form-label">Amount:</label>
-            <input 
-                type="number" 
-                name="amount"
-                value="{{ game.amount }}"
-                class="form-control"
-            >
-            <label class="form-label">Ready:</label>
-            <input 
-                type="checkbox" 
-                name="ready" 
-                class="form-check-input"
-                {% if game.ready %}
-                    checked
-                {% endif %}
-            >
+            <fieldset>
+                <legend>Edit Your Recommended Game</legend>
+                <label class="form-label">Title: </label>
+                <input 
+                    type="text" 
+                    name="title" 
+                    class="form-control"
+                    value="{{ game.title }}"
+                    required
+                >
+                <label class="form-label">Logo:</label>
+                <input 
+                    type="text" 
+                    name="logo" 
+                    class="form-control"
+                    value="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ game.logo }}"
+                >
+                <label class="form-label">Type:</label>
+                <input 
+                    type="text" 
+                    name="type" 
+                    class="form-control"
+                    placeholder="enter game type (e.g., video game, board game)"
+                    value="{{ game.type }}"
+                >
+                <label class="form-label">Steam App ID:</label>
+                <input 
+                    type="number" 
+                    name="steamId" 
+                    class="form-control"
+                    value="{{ game.steamId }}"
+                >
         </fieldset>
         <input type="submit" value="Edit Game" class="btn btn-success">
     </form>
