@@ -5,7 +5,6 @@ const express = require('express')
 const SavedGame = require('../models/savedGame')
 const Game = require('../models/game')
 const User = require('../models/user')
-const { rawListeners } = require('../models/user')
 
 /////////////////////////////////////////////////////
 //// Create Router                               ////
@@ -20,15 +19,39 @@ const router = express.Router()
 // index that shows only the user's saved games
 router.get('/mine', (req, res) => {
     // Find owner of game
+    // const myGames = []
 	SavedGame.find({ owner: req.session.userId })
         // !Might need to populate (below from class app)
-        // !.populate('owner', 'username')
         // !.populate('comments.author', '-password')
+        // .populate('title')
 		.then(games => {
+            console.log(games)
+            res.render('savedGames/index', { games, ...req.session })
             // Render games/index liquid view, and include destructured session info
-			res.render('games/index', { games, ...req.session })
+            // console.log('saved games', savedGames)
+            // // for(let i = 0; i < savedGames.length; i++) {
+            //     Game.find({ id: savedGames.savedGameId })
+            //         .then(games => {
+            //             // console.log('game', games)
+            //             // myGames.push(game)
+            //             // next()
+            //             console.log('saved games', savedGames)
+            //             console.log('games', games)
+            //             res.render('games/index', { savedGames, games, ...req.session })
+            //         })
+            //         .catch(error => {
+            //             console.log('game error', error)
+            //             res.redirect(`/error?error=${error}`)
+            //         })
+            // }
+            // return myGames
 		})
+        // .then(savedGames => {
+        //     // console.log(myGames)    
+			
+        // })
 		.catch(error => {
+            console.log('saved game error', error)
 			res.redirect(`/error?error=${error}`)
 		})
 })
@@ -37,7 +60,14 @@ router.get('/mine', (req, res) => {
 // new route -> GET route that renders our page with the form to get details from user
 router.get('/:gameId/new', (req, res) => {
     const gameId = req.params.gameId
-    res.render('savedGames/new', { gameId, ...req.session })
+    Game.findById(gameId)
+        .then(game=> {
+            res.render('savedGames/new', { game, gameId, ...req.session })
+        })
+        .catch(error => {
+			res.redirect(`/error?error=${error}`)
+		})
+    
 })
 
 // CREATE - POST
@@ -57,24 +87,6 @@ router.post('/new', (req, res) => {
         .catch((error) => {
 			console.log('the error', error)
 			
-			res.redirect(`/error?error=${error}`)
-		})
-})
-
-// CREATE - POST
-// create -> POST route that actually calls the db and makes a new document
-router.post('/', (req, res) => {
-    // !Set the owner equal to the session userID
-	req.body.owner = req.session.userId
-    // !req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
-	Game.create(req.body)
-        .then(game => {
-            // console.log('session', req.session)
-            // console.log('game', game)
-            // Redirect to savedGames including a paramater of the game's id
-            res.redirect(`/savedGames/${game.id}`)
-        })
-		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })

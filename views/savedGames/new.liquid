@@ -26,6 +26,20 @@
             value="{{ gameId }}"
             required
             >
+            <input
+            type="hidden" 
+            name="savedGameTitle" 
+            class="form-control"
+            value="{{ game.title }}"
+            required
+            >
+            <input
+            type="hidden" 
+            name="savedGameLogo" 
+            class="form-control"
+            value="{{ game.logo }}"
+            required
+            >
         </fieldset>
         <input type="submit" value="Save Game" class="btn btn-success">
     </form>

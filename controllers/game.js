@@ -6,7 +6,6 @@ const Game = require('../models/game')
 const User = require('../models/user')
 require('dotenv').config()
 const axios = require('axios')
-const { rawListeners } = require('../models/user')
 
 /////////////////////////////////////////////////////
 //// Create router                               ////
@@ -37,10 +36,7 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
 	Game.find({})
 		.then(games => {
-			const username = req.session.username
-			const loggedIn = req.session.loggedIn
-			
-			res.render('games/index', { games, username, loggedIn })
+			res.render('games/index', { games, ...req.session })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)

@@ -3,6 +3,9 @@
 /////////////////////////////////////////////////////
 const mongoose = require ('./connection')
 
+const User = require('./user')
+const Game = require('./game')
+
 /////////////////////////////////////////////////////
 //// Our Schema for the Rating subdocument       ////
 /////////////////////////////////////////////////////
@@ -21,6 +24,15 @@ const savedGameSchema = new Schema ({
         ref: 'Game',
         required: true
     },
+    savedGameTitle: {
+        type: String,
+        ref: 'Game',
+        required: true
+    }, 
+    savedGameLogo: {
+        type: String,
+        required: true
+    }, 
     userCollection: {
         type: String, 
         default: 'My Saved Games',
@@ -29,7 +41,7 @@ const savedGameSchema = new Schema ({
     hasPlayed: {
         type: Boolean,
         required: true,
-    }, 
+    },
     }, {
     timestamps: true
 })

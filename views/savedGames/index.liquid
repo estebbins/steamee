@@ -1,0 +1,26 @@
+{% layout 'layout.liquid'%}
+{% block content %}
+<div>
+    <h2 class="display-6">All Games</h2>
+    <div class="row">
+        {% for game in games %}
+        <div class="card" style="width: 18rem;">
+            <h5 class="card-header">{{ game.savedGameTitle }}</h5>
+            <img src="{{ game.savedGameLogo }}" alt="{{ game.savedGameTitle }} logo or image">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Ready?:
+                </h5>
+                <p class="card-text">
+                    Body: 
+                </p>
+                <p class="card-text">
+                    Amount: 
+                </p>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

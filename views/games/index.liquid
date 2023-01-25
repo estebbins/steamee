@@ -4,14 +4,14 @@
     <h2 class="display-6">All Games</h2>
     <div class="row">
         {% for game in games %}
-        <div class="card" style="width: 18rem;">
-            <h5 class="card-header">{{ game.title }}</h5>
-            <div class="card-body">
-                <a href="/games/{{ game.id }}" class="btn btn-info">
-                    View {{ game.title }}
-                </a>
-            </div>
-        </div>
+                <div class="card" style="width: 18rem;">
+                    <h5 class="card-header">{{ game.title }}</h5>
+                    <div class="card-body">
+                        <a href="/games/{{ game.id }}" class="btn btn-info">
+                            View {{ game.title }}
+                        </a>
+                    </div>
+                </div>
         {% endfor %}
     </div>
 </div>
