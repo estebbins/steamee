@@ -12,10 +12,8 @@ const { Schema } = mongoose
 // rating schema
 const commentSchema = new Schema ({
     note: {
-        type: Number, 
+        type: String, 
         required: true,
-        min: 0,
-        max: 5
     }, 
     author: {
         type: Schema.Types.ObjectId, 

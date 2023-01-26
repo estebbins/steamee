@@ -45,9 +45,9 @@ router.post('/:gameId', (req, res) => {
             })
             // catch and handle any errors 
             .catch(err => {
-                console.log(err)
+                console.log(error)
                 // res.status(400).json(err)
-                res.redirect(`/error?error=${err}`)
+                res.redirect(`/error?error=${error}`)
             })
     } else {
         // res.sendStatus(401) // send a 401-unauthorized

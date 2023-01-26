@@ -187,6 +187,7 @@ router.get('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
 	Game.findById(gameId)
         .populate('comments', '-password')
+        .populate('comments.author', '-password')
         .populate('ratings', '-password')
         .populate('ratings.author', '-password')
 		.then(game => {
