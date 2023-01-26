@@ -7,6 +7,7 @@ const User = require('../models/user')
 require('dotenv').config()
 const axios = require('axios')
 const SavedGame = require('../models/savedGame')
+const ratingSchema = require('../models/ratings')
 
 /////////////////////////////////////////////////////
 //// Create router                               ////
@@ -36,6 +37,9 @@ router.use((req, res, next) => {
 // Index ALL recommended games stored to database
 router.get('/', (req, res) => {
 	Game.find({})
+        .populate('owner', '-password')
+        .populate('comments.author', '-password')
+        .populate('ratings', '-password')
 		.then(games => {
 			res.render('games/index', { games, ...req.session })
 		})
@@ -182,22 +186,37 @@ router.put('/:gameId', (req, res) => {
 router.get('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
 	Game.findById(gameId)
+        .populate('comments', '-password')
+        .populate('ratings', '-password')
+        .populate('ratings.author', '-password')
 		.then(game => {
             // Render show.liquid, and include the game & session data destructured. 
-            if (req.session.loggedIn){
-                SavedGame.find({id: gameId, owner: req.session.userId})
-                    .then(savedGame => {
-                        console.log(savedGame)
-                        res.render('games/show', { game, savedGame, ...req.session })
-                    })
-                    .catch((error) => {
-                        res.redirect(`/error?error=${error}`)
-                    })
-            } else {
-                res.render('games/show', { game, ...req.session })
-            }
+            // if (req.session.loggedIn){
+            //     SavedGame.find({id: gameId, owner: req.session.userId})
+            //         .then(savedGame => {
+            //             console.log(savedGame)
+            //             res.render('games/show', { game, savedGame, ...req.session })
+            //         })
+            //         .catch((error) => {
+            //             res.redirect(`/error?error=${error}`)
+            //         })
+            // } else {
+                // console.log(game.ratings.includes(req.session.userId))
+                // console.log(game.ratings)
+                let userRateHistory
+                let userScore
+                // https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
+                if (game.ratings.some(score => score.author.id == req.session.userId)) {
+                    userRateHistory = true
+                    userScore = game.ratings.find(score => score.author.id == req.session.userId)
+                } else {
+                    userRateHistory = false
+                }
+                res.render('games/show', { game, userRateHistory, userScore, ...req.session })
+            // }
 		})
 		.catch((error) => {
+            console.log(error)
 			res.redirect(`/error?error=${error}`)
 		})
 })

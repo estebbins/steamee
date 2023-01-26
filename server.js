@@ -7,6 +7,7 @@ const middleware = require('./utils/middleware')
 const UserRouter = require('./controllers/user')
 const GameRouter = require('./controllers/game')
 const CommentRouter = require('./controllers/comment')
+const RatingRouter = require('./controllers/rating')
 const SavedGameRouter = require('./controllers/savedGame')
 const User = require("./models/user")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
@@ -26,6 +27,7 @@ middleware(app)
 app.use('/auth', UserRouter)
 app.use('/games', GameRouter)
 app.use('/comments', CommentRouter)
+app.use('/ratings', RatingRouter)
 app.use('/savedGames', SavedGameRouter)
 
 app.get('/', (req, res) => {

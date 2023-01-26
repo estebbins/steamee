@@ -1,21 +1,87 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-md">
-    <article>
-        <h2>
-            {{ game.title }}
-        </h2>
-        <h3>Amount: {{ game.amount }}</h3>
-        <h6></h6>
-        {% if game.owner == userId %}
-        <div class="btn-group">
-
-            <a href="/games/{{ game.id }}/edit" class="btn btn-primary">Edit</a>
-            <form action="/games/{{ game.id }}?_method=DELETE" method="POST">
-                <input type="submit" value="Delete" class="btn btn-danger">
+    <div class="row justify-content-between">
+        <article class="col-4">
+        <h2>{{ game.title }}</h2>
+        <img src="{{ game.logo }}" alt="{{ game.title }} logo or image">
+        <h4>Steamee Rating</h4>
+        {% if game.ratings.length > 0 %}
+            <h3>Average Steamee Rating: {{ game.avgRating }}/5</h3><small>({{ game.ratings.length }} rating(s))</small>
+        {% else %}
+            <small>no ratings yet...</small>
+        {% endif %}
+        {% if loggedIn %}
+            {% if userRateHistory %}
+                <small>You rated this game already!</small>
+                <div class="col-md-6">
+                    <form action="/ratings/{{ game.id }}?_method=PUT" method="POST">
+                        <fieldset>
+                            <legend>Change Rating?</legend>
+                            <label class="form-label">rating:</label>
+                            <input type="number" name="score" class="form-control-mb-1"
+                            value="{{ userScore.score}}">
+                            <label class="form-label">/5</label>
+                            <input type="hidden" name="id" class="form-control-mb-1"
+                            value="{{ userScore.id }}">
+                        </fieldset>
+                        <input type="submit" class="btn btn-success" value="edit rating">
+                    </form>
+                    <form action="/ratings/delete/{{ game.id }}/{{ userScore.id }}?_method=DELETE" method="POST">
+                        <fieldset>
+                            <input
+                            type="submit"
+                            lass="btn btn-danger"
+                            value="delete rating"
+                            >
+                        </fieldset>
+                    </form>
+                </div>
+            {% else %}
+                <div class="col-md-6">
+                    <form action="/ratings/{{ game.id }}" method="POST">
+                        <fieldset>
+                            <legend>Add Rating</legend>
+                            <label class="form-label">rating:</label>
+                            <input type="number" name="score" class="form-control-mb-1">
+                            <label class="form-label">/5</label>
+                        </fieldset>
+                        <input type="submit" class="btn btn-success" value="add rating">
+                    </form>
+                </div>
+            {% endif %}
+        {%else%}
+            <div class="col-md-6">
+                <small>If you'd like to rate this game, please log in...</small>
+            </div>
+        {% endif %}
+        <h4>Comments</h4>
+        {% if loggedIn %}
+        <div class="col-md-6">
+            <form action="/comments/{{ game.id }}" method="POST">
+                <fieldset>
+                    <legend>Add Comment</legend>
+                    <label class="form-label">comment:</label>
+                    <input type="text" name="note" class="form-control-mb-1">
+                </fieldset>
+                <input type="submit" class="btn btn-success" value="add comment">
             </form>
         </div>
+        {%else%}
+            <div class="col-md-6">
+                <small>If you'd like to leave a comment, please log in...</small>
+            </div>
+        {% endif %}
+        {% if game.comments.length > 0 %}
+            <div class="container-sm justify-content-center"></div>
+            {% for comm in game.comments %}
+                {% render '../comment.liquid', comm: comm, userId: userId, game: game %}
+            {% endfor %}
+        {% else %}
+            <small>no comments yet...</small>
         {% endif %}
     </article>
+    </div>
 </div>
 {% endblock %}
+       
