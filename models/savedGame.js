@@ -19,20 +19,11 @@ const savedGameSchema = new Schema ({
         ref: 'User', 
         required: true
     },
-    savedGameId: {
+    savedGameRef: {
         type: Schema.Types.ObjectId,
         ref: 'Game',
         required: true
     },
-    savedGameTitle: {
-        type: String,
-        ref: 'Game',
-        required: true
-    }, 
-    savedGameLogo: {
-        type: String,
-        required: true
-    }, 
     userCollection: {
         type: String, 
         default: 'My Saved Games',

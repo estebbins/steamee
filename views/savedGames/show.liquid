@@ -1,0 +1,38 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+<div class="container-md">
+    <article>
+        <h2>
+            {{ game.title }}
+        </h2>
+        <img src="{{ game.logo }}" alt="{{ game.title }} logo or image">
+        <h3>Saved to: {{ savedGame.userCollection }}</h3>
+        {% if game.ratings.length > 0 %}
+            <h3>Average Steamee Rating: {{ game.avgRating }}</h3>
+        {% else %}
+            <small>no ratings yet...</small>
+        {% endif %}
+        {% if savedGame.owner == userId %}
+            {% if savedGame.hasPlayed %}
+                <h6>You have played this game in local coop before!</h6>
+            {% else %}
+                <h6>You haven't played yet!</h6>
+            {% endif %}
+            <div class="btn-group">
+                <a href="/savedGames/{{ savedGame.id }}/edit" class="btn btn-primary">Edit</a>
+                <form action="/savedGames/{{ savedGame.id }}?_method=DELETE" method="POST">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                </form>
+            </div>
+            {% if game.comments.length > 0 %}
+                <div class="container-sm justify-content-center"></div>
+                {% for comm in game.comments %}
+                    {% render '../comment.liquid', comm: comm, userId: userId, game: game %}
+                {% endfor %}
+            {% else %}
+                <small>no comments yet...</small>
+            {% endif %}
+        {% endif %}
+    </article>
+</div>
+{% endblock %}

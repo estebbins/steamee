@@ -6,6 +6,7 @@ const Game = require('../models/game')
 const User = require('../models/user')
 require('dotenv').config()
 const axios = require('axios')
+const SavedGame = require('../models/savedGame')
 
 /////////////////////////////////////////////////////
 //// Create router                               ////
@@ -48,7 +49,7 @@ router.get('/', (req, res) => {
 router.get('/store', async (req, res) => {
     // Steam API call (filtered search results)
     const searchResult = await axios(`${process.env.STEAM_STORE_URL}`)
-    // console.log('Search Results - data.items', searchResult.data.items)
+    console.log('Search Results - data.items', searchResult.data.items)
 
     // Save the results to a variable
     const storeGames = searchResult.data.items
@@ -182,8 +183,19 @@ router.get('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
 	Game.findById(gameId)
 		.then(game => {
-            // Render show.liquid, and include the game & session data destructured
-			res.render('games/show', { game, ...req.session })
+            // Render show.liquid, and include the game & session data destructured. 
+            if (req.session.loggedIn){
+                SavedGame.find({id: gameId, owner: req.session.userId})
+                    .then(savedGame => {
+                        console.log(savedGame)
+                        res.render('games/show', { game, savedGame, ...req.session })
+                    })
+                    .catch((error) => {
+                        res.redirect(`/error?error=${error}`)
+                    })
+            } else {
+                res.render('games/show', { game, ...req.session })
+            }
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)

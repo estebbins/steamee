@@ -18,38 +18,15 @@ const router = express.Router()
 // INDEX - GET
 // index that shows only the user's saved games
 router.get('/mine', (req, res) => {
-    // Find owner of game
-    // const myGames = []
+    // Find owner of games
 	SavedGame.find({ owner: req.session.userId })
-        // !Might need to populate (below from class app)
-        // !.populate('comments.author', '-password')
-        // .populate('title')
-		.then(games => {
-            console.log(games)
-            res.render('savedGames/index', { games, ...req.session })
-            // Render games/index liquid view, and include destructured session info
-            // console.log('saved games', savedGames)
-            // // for(let i = 0; i < savedGames.length; i++) {
-            //     Game.find({ id: savedGames.savedGameId })
-            //         .then(games => {
-            //             // console.log('game', games)
-            //             // myGames.push(game)
-            //             // next()
-            //             console.log('saved games', savedGames)
-            //             console.log('games', games)
-            //             res.render('games/index', { savedGames, games, ...req.session })
-            //         })
-            //         .catch(error => {
-            //             console.log('game error', error)
-            //             res.redirect(`/error?error=${error}`)
-            //         })
-            // }
-            // return myGames
+        // populate subdoc
+        .populate('savedGameRef')
+		.then(savedGames => {
+            // console.log(games)
+            // let game = savedGame.savedGameRef
+            res.render('savedGames/index', { savedGames, ...req.session })
 		})
-        // .then(savedGames => {
-        //     // console.log(myGames)    
-			
-        // })
 		.catch(error => {
             console.log('saved game error', error)
 			res.redirect(`/error?error=${error}`)
@@ -57,7 +34,7 @@ router.get('/mine', (req, res) => {
 })
 
 // NEW - GET
-// new route -> GET route that renders our page with the form to get details from user
+// new route -> GET route that renders our page with the form to get additional details from user
 router.get('/:gameId/new', (req, res) => {
     const gameId = req.params.gameId
     Game.findById(gameId)
@@ -67,15 +44,11 @@ router.get('/:gameId/new', (req, res) => {
         .catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
-    
 })
 
 // CREATE - POST
 // create -> POST route that actually calls the db and makes a new document
 router.post('/new', (req, res) => {
-    // console.log('session', req.session)
-    // console.log(userId)
-    // console.log(game.title)
     req.body.owner = req.session.userId
     req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
     console.log('add saved game req body', req.body)
@@ -93,17 +66,21 @@ router.post('/new', (req, res) => {
 
 // EDIT - GET
 // edit route -> GET that takes us to the edit form view
-router.get('/:gameId/edit', (req, res) => {
+router.get('/:savedGameId/edit', (req, res) => {
 	// we need to get the id
-	const gameId = req.params.gameId
+	const savedGameId = req.params.savedGameId
     // Find the game
-	Game.findById(gameId)
-		.then(game => {
+	SavedGame.findById(savedGameId)
+        .populate('savedGameRef')
+		.then(savedGame => {
+            // console.log(savedGame)
+            const game = savedGame.savedGameRef
             // Render the edit page
             // !Do we need the req.session info?
-			res.render('games/edit', { game })
+			res.render(`savedGames/edit`, { savedGame, game, ...req.session })
 		})
 		.catch((error) => {
+            console.log(error)
 			res.redirect(`/error?error=${error}`)
 		})
 })
@@ -111,14 +88,15 @@ router.get('/:gameId/edit', (req, res) => {
 
 // UPDATE - PUT
 // update route
-router.put('/:gameId', (req, res) => {
-	const gameId = req.params.gameId
+router.put('/:savedGameId', (req, res) => {
+	const savedGameId = req.params.savedGameId
     // Find the game and update it using the req.body
     // ! Might need to duplicate within saved games controller as well/put parameters on this
-	Game.findByIdAndUpdate(gameId, req.body, { new: true })
-		.then(game => {
+    req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
+	SavedGame.findByIdAndUpdate(savedGameId, req.body, { new: true })
+		.then(savedGame => {
             // Redirect to show route after game updated
-			res.redirect(`/games/${game.id}`)
+			res.redirect(`/savedGames/${savedGame.id}`)
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
@@ -129,10 +107,14 @@ router.put('/:gameId', (req, res) => {
 // show route to show one game
 router.get('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
-	Game.findById(gameId)
-		.then(game => {
+	SavedGame.findById(gameId)
+        .populate('savedGameRef')
+		.then(savedGame => {
             // Render show.liquid, and include the game & session data destructured
-			res.render('games/show', { game, ...req.session })
+            const game = savedGame.savedGameRef
+            console.log('ratings', game.ratings)
+            console.log('ratings', game.ratings.length)
+            res.render(`savedGames/show`, { savedGame, game, ...req.session })
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
@@ -144,10 +126,10 @@ router.get('/:gameId', (req, res) => {
 router.delete('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
     // Find game & delete
-	Game.findByIdAndRemove(gameId)
+	SavedGame.findByIdAndRemove(gameId)
 		.then(game => {
             // Redirect to index
-			res.redirect('/games')
+			res.redirect('/savedGames/mine')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)

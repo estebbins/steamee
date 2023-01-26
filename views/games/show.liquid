@@ -3,15 +3,10 @@
 <div class="container-md">
     <article>
         <h2>
-            {{ game.title }} -
-            {% if game.ready %}
-            Ready
-            {% else %}
-            Not Ready
-            {%endif%}
+            {{ game.title }}
         </h2>
         <h3>Amount: {{ game.amount }}</h3>
-        <h6>Body: {{ game.body }}</h6>
+        <h6></h6>
         {% if game.owner == userId %}
         <div class="btn-group">
 
