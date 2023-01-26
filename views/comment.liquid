@@ -1,18 +1,18 @@
 {% block content %}
-  <div class="card mb-4 shadow">
-    <div class="card-body">
-      <p>{{ comm.note }}</p>
-      <div class="d-flex justify-content-between">
-        <small>author: {{ comm.author.username }}</small>
-        {% if comm.author == userId %}
-          <form action="/comments/delete/{{ game.id }}/{{ comm.id }}?_method=DELETE" method="POST">
-            <input
-              type="submit"
-              class="btn btn-danger"
-              value="X">
-          </form>
-        {% endif %}
-      </div>
+    <div class="card mb-4 shadow">
+        <div class="card-body">
+            <p>{{ comm.note }}</p>
+            <div class="d-flex justify-content-between">
+                <small>author: {{ comm.author.username }}</small>
+                {% if comm.author == userId %}
+                    <form action="/comments/delete/{{ game.id }}/{{ comm.id }}?_method=DELETE" method="POST">
+                        <input
+                        type="submit"
+                        class="btn btn-danger"
+                        value="X">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock %}

@@ -4,29 +4,29 @@
     <h2 class="display-6">My Steamee Games</h2>
     <div class="row">
         {% for savedGame in savedGames %}
-        <div class="card" style="width: 18rem;">
-            <h5 class="card-header">{{ savedGame.savedGameRef.title }}</h5>
-            <img src="{{ savedGame.savedGameRef.logo }}" alt="{{ savedGame.savedGameRef.title }} logo or image">
-            {% if savedGame.savedGameRef.length > 0 %}
-                <h3>Average Steamee Rating: {{ savedGame.savedGameRef.avgRating }}</h3>
-            {% else %}
-                <small>No Steamee Rating Yet!</small>
-            {% endif %}
-            {% if savedGame.owner == userId %}
-                {% if savedGame.hasPlayed %}
-                    <h6>You have played this game in local coop before!</h6>
+            <div class="card" style="width: 18rem;">
+                <h5 class="card-header">{{ savedGame.savedGameRef.title }}</h5>
+                <img src="{{ savedGame.savedGameRef.logo }}" alt="{{ savedGame.savedGameRef.title }} logo or image">
+                {% if savedGame.savedGameRef.length > 0 %}
+                    <h3>Average Steamee Rating: {{ savedGame.savedGameRef.avgRating }}</h3>
                 {% else %}
-                    <h6>You haven't played yet!</h6>
+                    <small>No Steamee Rating Yet!</small>
                 {% endif %}
-                <div class="btn-group">
-                    <a href="/savedGames/{{ savedGame.id }}/edit" class="btn btn-primary">Edit</a>
-                    <form action="/savedGames/{{ savedGame.id }}?_method=DELETE" method="POST">
-                    <input type="submit" value="Delete" class="btn btn-danger">
+                {% if savedGame.owner == userId %}
+                    {% if savedGame.hasPlayed %}
+                        <h6>You have played this game in local coop before!</h6>
+                    {% else %}
+                        <h6>You haven't played yet!</h6>
+                    {% endif %}
+                    <div class="btn-group">
+                        <a href="/savedGames/{{ savedGame.id }}/edit" class="btn btn-primary">Edit</a>
+                        <form action="/savedGames/{{ savedGame.id }}?_method=DELETE" method="POST">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </div>
+                {% endif %}
+                    <a href="/games/{{ savedGame.savedGameRef.id }}" class="btn btn-info">View {{ savedGame.savedGameRef.title }}</a>
                 </div>
-            {% endif %}
-                <a href="/games/{{ savedGame.savedGameRef.id }}" class="btn btn-info">View {{ savedGame.savedGameRef.title }}</a>
             </div>
-        </div>
         {% endfor %}
     </div>
 </div>

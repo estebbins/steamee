@@ -41,12 +41,24 @@ router.get('/', (req, res) => {
         .populate('comments.author', '-password')
         .populate('ratings', '-password')
 		.then(games => {
-			res.render('games/index', { games, ...req.session })
-		})
+            if(req.session.loggedIn){
+                SavedGame.find({owner: req.session.userId})
+                    .populate('savedGameRef')
+                    .then(savedGames => {
+                        res.render('games/index', { games, savedGames, ...req.session })
+                    })
+                    .catch(error => {
+                        res.redirect(`/error?error=${error}`)
+                    })
+		    } else {
+                res.render('games/index', { games, savedGames, ...req.session })
+            }
+    })
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
+
 
 // INDEX - GET - Game Store Query
 // Index ALL games from Steam API Call
