@@ -2,55 +2,65 @@
 {% block content %}
 <div class="container-sm">
     <form action="/games" method="POST">
-        <fieldset>
-            {% if gameInfo %}
-                <legend>Add Game from Steam</legend>
-            {% else %}
-                <legend>Game Not Found - Create New</legend>
-            {% endif %}
-            <label class="form-label">Title: </label>
-            <input 
-                type="readonly" 
-                name="title" 
-                class="form-control"
-                value="{{ gameInfo.title }}"
-                placeholder="name of game"
-                required
-            >
-            <label class="form-label">Logo:</label>
-            {% if gameInfo.tiny_capsule %}
+        {% if gameInfo %}
+            <fieldset>
+                <legend>Be the first to Recommend {{ gameInfo.title }} to Steamee Users!</legend>
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ gameInfo.tiny_capsule }}">
                 <input 
-                    type="readonly" 
+                    type="hidden" 
+                    name="title" 
+                    class="form-control"
+                    value="{{ gameInfo.title }}"
+                    required
+                >
+                <input 
+                    type="hidden" 
                     name="logo" 
                     class="form-control"
                     value="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ gameInfo.tiny_capsule }}"
                 >
-            {% else %}
                 <input 
-                type="string" 
-                name="logo" 
-                class="form-control"
-                placeholder="enter url for game"
+                    type="hidden" 
+                    name="type" 
+                    class="form-control"
+                    value="video game"
                 >
-            {% endif %}
-            <label class="form-label">Type:</label>
-            <input 
-                type="readonly" 
-                name="type" 
-                class="form-control"
-                placeholder="enter game type (e.g., video game, board game)"
-                value="video game"
-            >
-            {% if gameInfo.tiny_capsule %}
-            <label class="form-label">Steam App ID:</label>
                 <input 
-                    type="readonly" 
+                    type="hidden" 
                     name="steamId" 
                     class="form-control"
                     value="{{ gameInfo.appid }}"
                 >
-            {% endif %}
-        </fieldset>
+            </fieldset>
+        {% else %}
+            <fieldset>
+                <legend>Game Not Found - Create New</legend>
+                <label class="form-label">Title:</label>
+                <input 
+                    type="text" 
+                    name="title" 
+                    class="form-control"
+                    placeholder="name of game"
+                    required
+                >
+                <label class="form-label">Logo:</label>
+                <input 
+                    type="text" 
+                    name="logo" 
+                    class="form-control"
+                    placeholder="enter url for game logo"
+                >
+                <label class="form-label">Type:</label>
+                <input 
+                    type="readonly" 
+                    name="type" 
+                    class="form-control"
+                    placeholder="enter game type (e.g., video game, board game)"
+                    value="video game"
+                    required
+                >
+            </fieldset>
+        {% endif %}
         <input type="submit" value="Save Game" class="btn btn-success">
     </form>
 </div>
