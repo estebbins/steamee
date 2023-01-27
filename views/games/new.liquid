@@ -3,22 +3,36 @@
 <div class="container-sm">
     <form action="/games" method="POST">
         <fieldset>
-            <legend>Create New Game</legend>
+            {% if gameInfo %}
+                <legend>Add Game from Steam</legend>
+            {% else %}
+                <legend>Game Not Found - Create New</legend>
+            {% endif %}
             <label class="form-label">Title: </label>
             <input 
                 type="readonly" 
                 name="title" 
                 class="form-control"
                 value="{{ gameInfo.title }}"
+                placeholder="name of game"
                 required
             >
             <label class="form-label">Logo:</label>
-            <input 
-                type="readonly" 
+            {% if gameInfo.tiny_capsule %}
+                <input 
+                    type="readonly" 
+                    name="logo" 
+                    class="form-control"
+                    value="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ gameInfo.tiny_capsule }}"
+                >
+            {% else %}
+                <input 
+                type="string" 
                 name="logo" 
                 class="form-control"
-                value="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ gameInfo.tiny_capsule }}"
-            >
+                placeholder="enter url for game"
+                >
+            {% endif %}
             <label class="form-label">Type:</label>
             <input 
                 type="readonly" 
@@ -27,13 +41,15 @@
                 placeholder="enter game type (e.g., video game, board game)"
                 value="video game"
             >
+            {% if gameInfo.tiny_capsule %}
             <label class="form-label">Steam App ID:</label>
-            <input 
-                type="readonly" 
-                name="steamId" 
-                class="form-control"
-                value="{{ gameInfo.appid }}"
-            >
+                <input 
+                    type="readonly" 
+                    name="steamId" 
+                    class="form-control"
+                    value="{{ gameInfo.appid }}"
+                >
+            {% endif %}
         </fieldset>
         <input type="submit" value="Save Game" class="btn btn-success">
     </form>

@@ -160,12 +160,12 @@ router.get('/newForm', (req, res) => {
 	res.render('games/newForm', { ...req.session })
 })
 
-// NEW - GET
-// new route -> GET route that renders our page with the form for recommending a game that was not found on the store page.
-router.post('/newForm/:steamId', (req, res) => {
-    const steamId = req.params.steamId
-	res.render('games/newForm', { ...req.session })
-})
+// // NEW - GET
+// // new route -> GET route that renders our page with the form for recommending a game that was not found on the store page.
+// router.post('/newForm/:steamId', (req, res) => {
+//     const steamId = req.params.steamId
+// 	res.render('games/newForm', { ...req.session })
+// })
 
 
 // CREATE - POST
