@@ -381,3 +381,6 @@ Project planning guide. [^1]
 [^5]: https://github.com/Revadike/InternalSteamWebAPI/wiki
 [^6]: https://github.com/Revadike/InternalSteamWebAPI/wiki/Get-Search-Results
 [^7]: used figma to create ERD
+
+Guidance for dropdown in bootstrap: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_dropdown-divider&stacked=h
+Color pallette guide: https://icolorpalette.com/download/palette/446754_color_palette.jpg 

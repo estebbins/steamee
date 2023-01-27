@@ -1,5 +1,5 @@
 {% block content %}
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navback" ]>
     <div class="container-fluid">
         <a href="/" class="navbar-brand">steamee</a>
         {% if loggedIn %}
@@ -9,16 +9,44 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
             {% if loggedIn %}
-                <a href="/games" class="nav-link text-light">View Steamee Recommendations</a>
-                <a href="/games/store" class="nav-link text-light">Recommend Games</a>
-                <a href="/games/newForm" class="nav-link text-light">New Recommendation</a>
-                <a href="/savedGames/mine" class="nav-link text-light">My Saved Games</a>
-                <a href="/auth/logout" class="nav-link text-light">Log Out</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-text dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">get steamee</a>
+                    <ul class="dropdown-menu navlistback">
+                    <li class="nav-item"><a href="/games" class="nav-link nav-text">steamee suggestions</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle nav-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">get steamee</a>
+                    <ul class="dropdown-menu">
+                    <li class="nav-item"><a href="/games" class="nav-link nav-text">steamee suggestions</a></li>
+                    </ul>
+                </li>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">give steamee<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/games/store" class="nav-link nav-text">Steam inspiration</a></li>
+                        <li></li><a href="/games/newForm" class="nav-link nav-text">create suggestion</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">my steamee<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <a href="/savedGames/mine" class="nav-link nav-text">My Saved Games</a>
+                        <a href="/auth/logout" class="nav-link nav-text">Log Out</a>
+                    </ul>
+                </div>
             {% else %}
-                <a href="/auth/signup" class="nav-link text-light">Sign Up</a>
-                <a href="/auth/login" class="nav-link text-light">Sign In</a>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">my steamee<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <a href="/auth/signup" class="nav-link nav-text">Sign Up</a>
+                        <a href="/auth/login" class="nav-link nav-text">Sign In</a>
+                    </ul>
+                </div>
             {% endif %}
+            </ul>
         </div>
     </div>
 </nav>

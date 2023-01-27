@@ -1,0 +1,17 @@
+body {
+    background-color: #2d0100;
+    color: #FF8F8D;
+}
+.dropdown-toggle:hover {
+    color: #FDAF8B!important;
+}
+.navback {
+    background-color: #ab382a;
+}
+.navlistback {
+    background-color: #c84231;
+}
+.dropdown-menu:hover {
+    color: #FDAF8B!important;
+}
+
