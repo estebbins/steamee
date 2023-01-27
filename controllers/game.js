@@ -131,16 +131,42 @@ router.get('/:storeId/new', async (req, res) => {
     const storeInfo = await axios(`${process.env.STEAM_APP_URL}${storeId}&origin=https:%2F%2Fstore.steampowered.com`)
     // gameInfo within data.apps[0] - 1:1 relationship from all testing
     const gameInfo = storeInfo.data.apps[0]
+    Game.findOne({ steamId: storeId })
+        // .populate('owner')
+        // .populate('ratings')
+        // .populate('comments')
+        .then(game => {
+            res.redirect(`/savedGames/${game.id}/new`)
+        })
+        .catch(error => {
+            console.log(error)
+            res.render(`games/new`, { storeId, gameInfo, ...req.session })
+        })
     // console.log('game info', gameInfo)
     // render games/new with the store Id, game info and session info destructured
-    res.render(`games/new`, { storeId, gameInfo, ...req.session })
+    // res.render(`games/new`, { storeId, gameInfo, ...req.session })
 })
 
 // NEW - GET
 // new route -> GET route that renders our page with the form for recommending a game that was not found on the store page.
-router.get('/new', (req, res) => {
-	res.render('games/new', { ...req.session })
+router.post('/newForm/getInfo', (req, res) => {
+    res.redirect(`/games/${req.body.steamId}/new`)
+	// res.render('games/newForm', { ...req.session })
 })
+
+// NEW - GET
+// new route -> GET route that renders our page with the form for recommending a game that was not found on the store page.
+router.get('/newForm', (req, res) => {
+	res.render('games/newForm', { ...req.session })
+})
+
+// NEW - GET
+// new route -> GET route that renders our page with the form for recommending a game that was not found on the store page.
+router.post('/newForm/:steamId', (req, res) => {
+    const steamId = req.params.steamId
+	res.render('games/newForm', { ...req.session })
+})
+
 
 // CREATE - POST
 // create -> POST route that actually calls the db and makes a new document

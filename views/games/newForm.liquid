@@ -1,0 +1,52 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+<div class="container-sm">
+        <form action="/games/newForm/getInfo" method="POST">
+            <legend>Add Game with Steam ID (preferred)</legend>
+            <label class="form-label">Enter Steam App Id: [instructions on how to find] </label>
+            <input 
+            type="number" 
+            name="steamId" 
+            class="form-control"
+            placeholder="Enter Steam App ID"
+            >
+            <input type="submit" value="Search Steam" class="btn btn-success">
+        </form>
+        <hr>
+        <form action="" method="">
+            <legend>Add Game with No Steam ID</legend>
+                <label class="form-label">Title: </label>
+                <input 
+                    type="text" 
+                    name="title" 
+                    class="form-control"
+                    value="{{ gameInfo.title }}"
+                    required
+                >
+                <label class="form-label">Logo:</label>
+                <input 
+                    type="readonly" 
+                    name="logo" 
+                    class="form-control"
+                    value="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ gameInfo.tiny_capsule }}"
+                >
+                <label class="form-label">Type:</label>
+                <input 
+                    type="readonly" 
+                    name="type" 
+                    class="form-control"
+                    placeholder="enter game type (e.g., video game, board game)"
+                    value="video game"
+                >
+                <label class="form-label">Steam App ID:</label>
+                <input 
+                    type="readonly" 
+                    name="steamId" 
+                    class="form-control"
+                    value="{{ gameInfo.appid }}"
+                >
+            </fieldset>
+            <input type="submit" value="Save Game" class="btn btn-success">
+        </form>
+</div>
+{% endblock %}

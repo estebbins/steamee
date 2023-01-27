@@ -6,7 +6,7 @@
             <legend>Create New Game</legend>
             <label class="form-label">Title: </label>
             <input 
-                type="text" 
+                type="readonly" 
                 name="title" 
                 class="form-control"
                 value="{{ gameInfo.title }}"
@@ -14,14 +14,14 @@
             >
             <label class="form-label">Logo:</label>
             <input 
-                type="text" 
+                type="readonly" 
                 name="logo" 
                 class="form-control"
                 value="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ gameInfo.tiny_capsule }}"
             >
             <label class="form-label">Type:</label>
             <input 
-                type="text" 
+                type="readonly" 
                 name="type" 
                 class="form-control"
                 placeholder="enter game type (e.g., video game, board game)"
@@ -29,7 +29,7 @@
             >
             <label class="form-label">Steam App ID:</label>
             <input 
-                type="number" 
+                type="readonly" 
                 name="steamId" 
                 class="form-control"
                 value="{{ gameInfo.appid }}"
