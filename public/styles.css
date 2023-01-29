@@ -14,4 +14,40 @@ body {
 .dropdown-menu:hover {
     color: #FDAF8B!important;
 }
+.home-page {
+    background-image: url('https://cdn.pixabay.com/photo/2018/03/18/17/38/teamwork-3237646_960_720.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;   
+    top: 59px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+#home-div {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-image: url('https://cdn.pixabay.com/photo/2017/02/10/14/05/heart-2055204_960_720.png');
+    background-size: cover;
+    height: 400px;
+    width: 650px;
+}
+#home-div:first-of-type h1 {
+    margin: 0 auto;
+    padding-top: 50px;
+    font-size: 100px;
+    text-align: center;
+    text-shadow: #d60400 2px 5px 3px, -1px -1px 3px #e1d8d8;
+}
+#home-div:first-of-type p {
+    margin: 0 auto;
+    padding-top: 25px;
+    font-size: 30px;
+    text-align: center;
+    color: #e08e84;
+    text-shadow: #6b0200 2px 5px 3px, -1px -1px 3px #e1d8d8;
+}
+
 

@@ -31,7 +31,13 @@ app.use('/ratings', RatingRouter)
 app.use('/savedGames', SavedGameRouter)
 
 app.get('/', (req, res) => {
-	res.render('home.liquid', { ...req.session })
+    // const steamMovie = document.getElementById('background-video')
+    // steamMovie.load()
+    // steamMovie.play()
+    // steamMovie.autoplay = true
+    // steamMovie.loop = true
+    const steamMovie = "./public/vecteezy_smoke-bonfire-with-alpha-channel_1935874.mov"
+	res.render('home.liquid', { steamMovie, ...req.session })
 })
 
 app.get('/error', (req, res) => {

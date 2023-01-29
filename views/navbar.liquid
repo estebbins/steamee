@@ -18,33 +18,27 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">get steamee</a>
-                    <ul class="dropdown-menu">
-                    <li class="nav-item"><a href="/games" class="nav-link nav-text">steamee suggestions</a></li>
+                    <a class="nav-link nav-text dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">give steamee</a>
+                    <ul class="dropdown-menu navlistback">
+                        <li><a href="/games/store" class="nav-link nav-text">Steam inspiration</a></li>
+                        <li><a href="/games/newForm" class="nav-link nav-text">create suggestion</a></li>
                     </ul>
                 </li>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">give steamee<span class="caret"></span></button>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle nav-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">profile</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/games/store" class="nav-link nav-text">Steam inspiration</a></li>
-                        <li></li><a href="/games/newForm" class="nav-link nav-text">create suggestion</a></li>
+                        <li><a href="/savedGames/mine" class="nav-link nav-text">My Saved Games</a></li>
+                        <li><a href="/auth/logout" class="nav-link nav-text">Log Out</a></li>
                     </ul>
-                </div>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">my steamee<span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <a href="/savedGames/mine" class="nav-link nav-text">My Saved Games</a>
-                        <a href="/auth/logout" class="nav-link nav-text">Log Out</a>
-                    </ul>
-                </div>
+                </li>
             {% else %}
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">my steamee<span class="caret"></span></button>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle nav-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">profile</a>
                     <ul class="dropdown-menu">
-                        <a href="/auth/signup" class="nav-link nav-text">Sign Up</a>
-                        <a href="/auth/login" class="nav-link nav-text">Sign In</a>
+                        <li><a href="/auth/signup" class="nav-link nav-text">Sign Up</a></li>
+                        <li><a href="/auth/login" class="nav-link nav-text">Sign In</a></li>
                     </ul>
-                </div>
+                </li>
             {% endif %}
             </ul>
         </div>
