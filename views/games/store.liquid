@@ -1,19 +1,23 @@
 {% layout 'layout.liquid'%}
 {% block content %}
-<div>
-    <h2 class="display-6">All Games</h2>
-    <div class="row">
-        {% for storeGame in storeGames %}
-        <div class="card" style="width: 18rem;">
-            <h5 class="card-header">{{ storeGame.name }}</h5>
-            <img src="{{ storeGame.logo }}" alt="{{ storeGame.name }} logo or image">
-            <div class="card-body">
-                <a href="/games/{{ storeGame.storeId }}/new" class="btn btn-info">
-                    Recommend{{ storeGame.name }}
-                </a>
+    <div class="container-lg">
+        <h2 class="display-6">Games from <a href="https://store.steampowered.com/" class="btn steamlink">Steam&#174</a></h2>
+        <div class="row">
+            {% for storeGame in storeGames %}
+            <div class="card">
+                <div class="card-title">
+                    <h5 class="card-header-override text-center">{{ storeGame.name }}</h5>
+                </div>
+                <div class="image text-center">
+                    <img class="card-img-center mx-auto" src="{{ storeGame.logo }}" alt="{{ storeGame.name }} logo or image">
+                </div>
+                <div class="btn-group mine1" style="height: 50px; margin-top: 20px;">
+                    <a href="/games/{{ storeGame.storeId }}/new" class="btn recommend">
+                        Recommend
+                    </a>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
 {% endblock %}

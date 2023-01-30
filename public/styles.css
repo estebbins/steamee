@@ -248,3 +248,20 @@ ul .home::before {
     height: 38px;
     overflow: unset;
 }
+.steamlink {
+    font-size: calc(1.375rem + 1.5vw);
+    color: #ff8f8d!important;
+    padding: 0;
+    line-height: 39.486px!important;
+    margin-bottom: 8px;
+}
+.recommend {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3500/3500896.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+}
+.recommend:hover {
+    color: white;
+}
