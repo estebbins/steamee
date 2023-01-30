@@ -114,4 +114,108 @@ ul .home::before {
     margin: 0;
     border-radius:10px;
 }
-
+.card {
+    width: 350px;
+    height: 350px;
+    margin: 5px;
+    background-color: transparent;
+    /* background: white; */
+    /* background: linear-gradient(0deg, rgba(255,139,137,1) 8%, rgba(214,4,0,1) 33%, rgba(234,53,50,1) 52%, rgba(255,104,102,1) 65%, rgba(255,34,30,1) 85%); */
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3599/3599696.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: black solid 3px!important;
+}
+.card:hover {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3599/3599720.png');
+}
+.card-title {
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: transparent!important;
+}
+.card-header-override {
+    width: 230px;
+}
+.image {
+    width: 324px;
+    height: 45px;
+}
+/* USE FOR REGULAR INDEX */
+.score {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/535/535183.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+.score-0 {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/1000/1000621.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+}
+.played {
+    background-image: url('https://cdn-icons-png.flaticon.com/128/4009/4009283.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+}
+.not-played {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2671/2671285.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+}
+.played:hover, .not-played:hover {
+    color: white;
+}
+.edit {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/9145/9145066.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+    width: 50px!important;
+    margin-right: 20px;
+}
+.delete {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/484/484560.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+    display: inline-block;
+    width: 50px!important;
+    margin-left: 20px;
+}
+.view {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3945/3945085.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+}
+.edit:hover {
+    color: transparent;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2369/2369885.png');
+}
+.delete:hover {
+    color: transparent;
+    background-image: url('https://cdn-icons-png.flaticon.com/128/6646/6646004.png');
+}
+.view:hover {
+    color: transparent;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/9444/9444889.png');
+}
+.mine1 {
+    padding-left: 0!important;
+    margin: 0 auto;
+    justify-items: center;
+}
