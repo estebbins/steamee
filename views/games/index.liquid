@@ -1,30 +1,38 @@
 {% layout 'layout.liquid'%}
 {% block content %}
-<div>
+<div class="container-lg">
     <h2 class="display-6">Steamee Recommendations</h2>
     <div class="row">
         {% for game in games %}
-            <div class="card" style="width: 18rem;">
-                <h5 class="card-header">{{ game.title }}</h5>
-                <img src="{{ game.logo }}" alt="{{ game.title }} logo or image">
-                {% if game.ratings.length > 0 %}
-                    <h3>Average Steamee Rating: {{ game.avgRating }}</h3><small>({{ game.ratings.length}} rating(s))</small>
-                {% else %}
-                    <small>No Steamee Rating Yet!</small>
-                {% endif %}
-                <h3>{{ game.comments.length }} comments</h3>
+            <div class="card">
+                <div class="card-title">
+                    <h5 class="card-header-override text-center">{{ game.title }}</h5>
+                </div>
+                <div class="image text-center">
+                    <img class="card-img-center mx-auto" src="{{ game.logo }}" alt="{{ game.title }} logo or image">
+                </div>
+                <div class="btn-group mine1">
+                    {% if game.ratings.length > 0 %}
+                        <a href="/games/{{ game.id }}" class="btn score" alt="edit saved game info">{{ game.avgRating }}</a>
+                    {% else %}
+                        <a href="/games/{{ game.id }}" class="btn score-0" alt="edit saved game info">{{ game.avgRating }}</a>
+                    {% endif %}
+                    <a href="/games/{{ game.id }}" class="btn comment">{{ game.comments.length }}</a>
+                </div>
                 {% if loggedIn %}
                     {% if savedGames %}
-                        {% for savedGame in savedGames %}
-                            {% if savedGame.savedGameRef.id == game.id %}
-                                <a href="/savedGames/{{ savedGame.id }}" class="btn btn-primary">View in {{savedGame.userCollection}}</a>
-                            {% endif %}
-                        {% endfor %}
+                        <div class="btn-group mine1">
+                            {% for savedGame in savedGames %}
+                                {% if savedGame.savedGameRef.id == game.id %}
+                                    <a href="/savedGames/{{ savedGame.id }}" class="btn saved">{{savedGame.userCollection}}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     {% endif %}
-                <a href="/savedGames/{{ game.id }}/new" class="btn btn-primary">Save Game</a>
+                <div class="btn-group mine1">
+                    <a href="/savedGames/{{ game.id }}/new" alt="save {{ game.title }} to your profile" class="btn save" style="height: 38px; width: 38px;"></a>
                 {% endif %}
-                <div class="btn-group">
-                <a href="/games/{{ game.id }}" class="btn btn-primary">View Game</a>
+                    <a href="/games/{{ game.id }}" class="btn view" style="height: 38px; width: 38px;"></a>
                 </div>
             </div>
         {% endfor %}

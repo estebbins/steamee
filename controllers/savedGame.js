@@ -23,9 +23,15 @@ router.get('/mine', (req, res) => {
         // populate subdoc
         .populate('savedGameRef')
 		.then(savedGames => {
+            const userCollections = []
+            savedGames.forEach(savedGame => {
+                if(!userCollections.includes(savedGame.userCollection)) {
+                    userCollections.push(savedGame.userCollection)
+                }
+            })
             // console.log(games)
             // let game = savedGame.savedGameRef
-            res.render('savedGames/index', { savedGames, ...req.session })
+            res.render('savedGames/index', { savedGames, userCollections, ...req.session })
 		})
 		.catch(error => {
             console.log('saved game error', error)

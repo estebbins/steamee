@@ -25,7 +25,6 @@ h1, h2, h3 {
     color: #feccb5!important;
 }
 .hello:hover {
-    color: #feccb5!important;
     text-shadow: #2d010072 .5px .5px 5px, #ff6966 1px 1px 1px, #2d010072 1.5px 1.5px 5px, #ff4642 2px 2px 1px, #2d010072 2.5px 2.5px 5px,#ff231e 3px 3px 1px,#2d010072 3.5px 3.5px 5px, #f90500 4px 4px 1px, #2d010072 4.5px 4.5px 5px, #d60400 5px 5px 1px, #2d010072 5.5px 5.5px 5px, #2d0100 6px 6px 10px, -1px -1px 3px #e1d8d8;
 }
 .home-page {
@@ -41,7 +40,7 @@ h1, h2, h3 {
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;   
-    top: 59px;
+    top: 59px!important;
     bottom: 0;
     right: 0;
     left: 0;
@@ -136,6 +135,8 @@ ul .home::before {
     justify-content: center;
     align-items: flex-end;
     background-color: transparent!important;
+    color: #feccb5!important;
+    text-shadow: #2d010072 .5px .5px 5px, #ff6966 1px 1px 1px, #2d010072 1.5px 1.5px 5px, #ff4642 2px 2px 1px, #2d010072 2.5px 2.5px 5px,#ff231e 3px 3px 1px,#2d010072 3.5px 3.5px 5px, #f90500 4px 4px 1px, #2d010072 4.5px 4.5px 5px, #d60400 5px 5px 1px, #2d010072 5.5px 5.5px 5px, #2d0100 6px 6px 10px, -1px -1px 3px #e1d8d8;
 }
 .card-header-override {
     width: 230px;
@@ -158,6 +159,32 @@ ul .home::before {
     background-position: center;
     background-repeat: no-repeat;
     color: transparent;
+}
+.comment {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4526/4526521.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+.save {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3179/3179393.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.saved {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2102/2102633.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+    height: 38px;
+    width: 38px;
+}
+.saved:hover {
+    color: #feccb5!important;
+    white-space: nowrap;
 }
 .played {
     background-image: url('https://cdn-icons-png.flaticon.com/128/4009/4009283.png');
@@ -218,4 +245,6 @@ ul .home::before {
     padding-left: 0!important;
     margin: 0 auto;
     justify-items: center;
+    height: 38px;
+    overflow: unset;
 }

@@ -3,28 +3,33 @@
     <div class="container-lg">
         <h2 class="display-6">My Steamee Games</h2>
         <div class="row">
-            {% for savedGame in savedGames %}
-                <div class="card">
-                    <div class="card-title">
-                        <h5 class="card-header-override text-center">{{ savedGame.savedGameRef.title }}</h5>
-                    </div>
-                    <div class="image text-center">
-                        <img class="card-img-center mx-auto" src="{{ savedGame.savedGameRef.logo }}" alt="{{ savedGame.savedGameRef.title }} logo or image">
-                    </div>
-                    {% if savedGame.owner == userId %}
-                        {% if savedGame.hasPlayed %}
-                            <a href="/savedGames/{{ savedGame.id }}/edit" class="btn played" alt="edit saved game info">Played!</a>
-                        {% else %}
-                            <a href="/savedGames/{{ savedGame.id }}/edit" class="btn not-played" alt="edit saved game info">Not Played!</a>
-                        {% endif %}
-                        <div class="btn-group mine1">
-                            <a href="/savedGames/{{ savedGame.id }}/edit" class="btn edit" alt="edit saved game info"></a>
-                            <form action="/savedGames/{{ savedGame.id }}?_method=DELETE" method="POST">
-                            <input type="submit" value="" alt="delete from saved" class="btn delete">
+            {% for userCollection in userCollections %}
+                <h3 class="display-8">{{ userCollection }}</h3>
+                {% for savedGame in savedGames %}
+                    {% if savedGame.userCollection == userCollection %}
+                        <div class="card">
+                            <div class="card-title">
+                                <h5 class="card-header-override text-center">{{ savedGame.savedGameRef.title }}</h5>
+                            </div>
+                            <div class="image text-center">
+                                <img class="card-img-center mx-auto" src="{{ savedGame.savedGameRef.logo }}" alt="{{ savedGame.savedGameRef.title }} logo or image">
+                            </div>
+                            {% if savedGame.owner == userId %}
+                                {% if savedGame.hasPlayed %}
+                                    <a href="/savedGames/{{ savedGame.id }}/edit" class="btn played" alt="edit saved game info">Played!</a>
+                                {% else %}
+                                    <a href="/savedGames/{{ savedGame.id }}/edit" class="btn not-played" alt="edit saved game info">Not Played!</a>
+                                {% endif %}
+                                <div class="btn-group mine1">
+                                    <a href="/savedGames/{{ savedGame.id }}/edit" class="btn edit" alt="edit saved game info"></a>
+                                    <form action="/savedGames/{{ savedGame.id }}?_method=DELETE" method="POST">
+                                    <input type="submit" value="" alt="delete from saved" class="btn delete">
+                                </div>
+                            {% endif %}
+                                <a href="/games/{{ savedGame.savedGameRef.id }}" class="btn view" alt="view {{ savedGame.savedGameRef.title }}">X</a>
                         </div>
                     {% endif %}
-                        <a href="/games/{{ savedGame.savedGameRef.id }}" class="btn view" alt="view {{ savedGame.savedGameRef.title }}">X</a>
-                </div>
+                {% endfor %}
             {% endfor %}
         </div> 
     </div>
