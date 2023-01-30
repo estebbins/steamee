@@ -4,10 +4,19 @@ body {
     font-family: 'Rubik', cursive;
 }
 .dropdown-toggle:hover {
-    color: #FDAF8B!important;
+    color: #ff8f8d!important;
+    text-shadow: #2d010072 .5px .5px 5px, #ff6966 1px 1px 1px, #2d010072 1.5px 1.5px 5px, #ff4642 2px 2px 1px, #2d010072 2.5px 2.5px 5px,#ff231e 3px 3px 1px,#2d010072 3.5px 3.5px 5px, #f90500 4px 4px 1px, #2d010072 4.5px 4.5px 5px, #d60400 5px 5px 1px, #2d010072 5.5px 5.5px 5px, #2d0100 6px 6px 10px, -1px -1px 3px #e1d8d8;
 }
 .navback {
-    background-color: #ab382a;
+    /* background-color: #f90500; */
+    /* background: rgb(107,2,0);
+    background: linear-gradient(0deg, rgba(107,2,0,1) 13%, rgba(214,4,0,1) 40%, rgba(249,5,0,1) 66%, rgba(178,3,0,1) 88%);   */
+    /* background: rgb(107,2,0);
+    background: linear-gradient(0deg, rgba(107,2,0,1) 13%, rgba(214,4,0,1) 36%, rgba(249,5,0,1) 71%, rgba(178,3,0,1) 91%); */
+    /* background: rgb(107,2,0);
+    background: linear-gradient(0deg, rgba(107,2,0,1) 13%, rgba(214,4,0,1) 31%, rgba(249,5,0,1) 71%, rgba(178,3,0,1) 91%); */
+    background: rgb(107,2,0);
+    background: linear-gradient(0deg, rgba(107,2,0,1) 8%, rgba(214,4,0,1) 25%, rgba(249,5,0,1) 74%, rgba(178,3,0,1) 91%);
     font-family: 'Poiret One', cursive;
 }
 h1, h2, h3 {
@@ -41,29 +50,44 @@ h1, h2, h3 {
     font-family: 'Monoton', cursive;
     text-shadow: #2d010072 2.5px 2.5px 5px, #ff6966 5px 5px 1px, #2d010072 7.5px 7.5px 5px, #ff4642 10px 10px 1px, #2d010072 12.5px 12.5px 5px,#ff231e 15px 15px 1px,#2d010072 17.5px 17.5px 5px, #f90500 20px 20px 1px, #2d010072 22.5px 22.5px 5px, #d60400 25px 25px 1px, #2d010072 27.5px 27.5px 5px, #2d0100 30px 30px 10px, -1px -1px 3px #e1d8d8;
 }
-#home-div {
+.home-div {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     background-image: url('https://cdn.pixabay.com/photo/2017/02/10/14/05/heart-2055204_960_720.png');
     background-size: cover;
+    /* guidance: https://www.geeksforgeeks.org/drop-shadow-for-png-image-using-css/ */
+    filter: drop-shadow(15px 15px 5px rgb(53, 43, 43));
     height: 400px;
     width: 650px;
 }
-#home-div:first-of-type h1 {
+.home-div:first-of-type h1 {
     margin: 0 auto;
     padding-top: 50px;
     font-size: 100px;
     text-align: center;
     text-shadow: #d60400 2px 5px 3px, -1px -1px 3px #e1d8d8;
 }
-#home-div:first-of-type p {
+.home-div:first-of-type p {
     margin: 0 auto;
     padding-top: 25px;
     font-size: 30px;
     text-align: center;
-    color: #e08e84;
-    text-shadow: #6b0200 2px 5px 3px, -1px -1px 3px #e1d8d8;
+    color: #b20300;
+    text-shadow: #6b0200 1px 1px 1px, #e1d8d8 1.5px 1.5px 1px, #f90500 2px 2px 1px, #e1d8d8 -1px -1px 3px, #f90500 -1px -1px 1px, #e1d8d8 -1.5px -1.5px 1px, #470100 3.5px 3.5px 1px, #470100 5px 5px 3px, #470100 6px 6px 7px;
+}
+.home-div p:nth-of-type(2) {
+    padding-top: 0px;
+}
+
+ul .home {
+    list-style: none;
+    color: #b20300;
+    text-shadow: #6b0200 1px 1px 1px, #e1d8d8 1.5px 1.5px 1px, #f90500 2px 2px 1px, #e1d8d8 -1px -1px 3px, #f90500 -1px -1px 1px, #e1d8d8 -1.5px -1.5px 1px, #470100 3.5px 3.5px 1px, #470100 5px 5px 3px, #470100 6px 6px 7px;
+}
+ul .home::before {
+    /* symbol from: https://www.htmlsymbols.xyz/heart-symbols */
+    content: '\2665'
 }
 
 
