@@ -21,7 +21,7 @@
                                                 type="number" 
                                                 name="score" 
                                                 class="form-control-mb-1"
-                                                value="{{ userScore.score}}"
+                                                value="{{ userScore.score }}"
                                                 style="width: 50px;"
                                             >
                                         <label class="form-label">/5</label>
@@ -113,12 +113,13 @@
                 {% comment %}
                 
                     Activate only when deleting an entire game is necessary (actually gives everyone ability right now...)
-                    {% endcomment %}
+                    
                 {% if session.username == larrydavid2  %}
                         <form action="/games/{{ game.id }}?_method=DELETE" method="POST" style="display: inline!important;">
                             <input type="submit" class="btn delete" value="">
                         </form>
                 {% endif %}
+                {% endcomment %}
                 
         </article>
         </div>

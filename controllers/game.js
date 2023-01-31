@@ -62,7 +62,7 @@ router.get('/', (req, res) => {
 router.get('/store', async (req, res) => {
     // Steam API call (filtered search results)
     const searchResult = await axios(`${process.env.STEAM_STORE_URL}`)
-    console.log('Search Results - data.items', searchResult.data.items)
+    // console.log('Search Results - data.items', searchResult.data.items)
 
     // Save the results to a variable
     const storeGames = searchResult.data.items
@@ -84,8 +84,6 @@ router.get('/store', async (req, res) => {
             storeGames[i].apps = true
         }
     }   
-    // console.log('storeGames after id & item type extracted from logo url', storeGames)
-
     // Remove any items that are not apps
     for (let i=0; i < storeGames.length; i++) {
         if (storeGames[i].apps != true) {
@@ -95,18 +93,16 @@ router.get('/store', async (req, res) => {
         }
     }
     // console.log('storeGames after splice', storeGames)
-
     // Render the games/store page with the storeGames array & destructured session info
     res.render('games/store', { storeGames, ...req.session })
 })
 
 // INDEX - GET
-// !MOVE THIS TO SAVED GAMES
+//! Not user facing
 // index that shows only the user's games
 router.get('/mine', (req, res) => {
     // Find owner of game
 	Game.find({ owner: req.session.userId })
-        // !Might need to populate (below from class app)
         .populate('owner', 'username')
         .populate('comments.author', '-password')
 		.then(games => {
@@ -120,7 +116,6 @@ router.get('/mine', (req, res) => {
 
 // NEW - GET - With Steam Info
 // New route that renders that feeds additional information from a separate API Call to the new form when recommending from the store page
-// ! Need to handle duplicate/error message is confusing
 router.get('/:storeId/new', async (req, res) => {
     // Save store id (from store.liquid via store index route)
     const storeId = req.params.storeId
@@ -129,19 +124,15 @@ router.get('/:storeId/new', async (req, res) => {
     // gameInfo within data.apps[0] - 1:1 relationship from all testing
     const gameInfo = storeInfo.data.apps[0]
     Game.findOne({ steamId: storeId })
-        // .populate('owner')
-        // .populate('ratings')
-        // .populate('comments')
         .then(game => {
+            // If a game with the same steam Id is already found, then redirect to saved games
             res.redirect(`/savedGames/${game.id}/new`)
         })
         .catch(error => {
-            console.log(error)
+            // console.log(error)
+            // If no game was found, create a new one
             res.render(`games/new`, { storeId, gameInfo, ...req.session })
         })
-    // console.log('game info', gameInfo)
-    // render games/new with the store Id, game info and session info destructured
-    // res.render(`games/new`, { storeId, gameInfo, ...req.session })
 })
 
 // NEW - GET
@@ -157,18 +148,9 @@ router.get('/newForm', (req, res) => {
 	res.render('games/newForm', { ...req.session })
 })
 
-// // NEW - GET
-// // new route -> GET route that renders our page with the form for recommending a game that was not found on the store page.
-// router.post('/newForm/:steamId', (req, res) => {
-//     const steamId = req.params.steamId
-// 	res.render('games/newForm', { ...req.session })
-// })
-
-
 // CREATE - POST
 // create -> POST route that actually calls the db and makes a new document
 router.post('/', (req, res) => {
-    // !Set the owner equal to the session userID
 	req.body.owner = req.session.userId
 	Game.create(req.body)
         .then(game => {
@@ -232,10 +214,11 @@ router.get('/:gameId', (req, res) => {
             let userScore
             if (game.ratings.some(score => score.author.id == req.session.userId)) {
                 userRateHistory = true
-                userScore = game.ratings.find(score => score.author.id == req.sessionuserId)
+                userScore = game.ratings.find(score => score.author.id == req.session.userId)
             } else {
                 userRateHistory = false
             }
+            console.log('userscore', userScore)
             // If user history is true, a different form will render.
             res.render('games/show', { game, userRateHistory, userScore, ...req.session })
 		})

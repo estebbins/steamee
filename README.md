@@ -3,7 +3,7 @@
 ==link to live site==
 
 ## Overview
-This is a full-stack Node application designed to help users discover and recommend local co-op games available on Steam or other platforms. All too frequently, couples, friends, or just any two strangers in a room, scour the internet for good local co-op games, just to find the same three websites, recommending the same handful of games they've already played! It's time to get steamee!
+This is a full-stack Node application designed to help users discover and suggest local co-op games available on Steam. All too frequently, couples, friends, or just any two strangers in a room, scour the internet for good local co-op games, just to find the same three websites, recommending the same handful of games they've already played! It's time to get steamee!
 
 ### Technologies Used:
 - Mongoose
@@ -16,7 +16,8 @@ This is a full-stack Node application designed to help users discover and recomm
 - Axios
 - Internal Steam Web API [^5]
     - particularly - GET search/results [^6]
-- Do JavaScript, Node, Nodemon, dotenv, method-override, express-session, connect-mongo need to be included?
+- JavaScript
+- packages: Node, Nodemon, dotenv, method-override, express-session, connect-mongo
 
 ## User stories
 **As a user, I want the ability to** 
@@ -24,9 +25,7 @@ This is a full-stack Node application designed to help users discover and recomm
 - sign in
 - sign out
 - view a list of local co-op games directly from Steam's API
-- view the list of local co-op games fellow steamees have saved or added
-- sort & the list by the steamee rating
-- see how many users have saved the game to their account
+- view the list of local co-op games fellow steamees have suggested
 - save games to my user account
 - indicate if I've played this game as local co-op
 - leave a rating out of 5 for the game
@@ -34,38 +33,62 @@ This is a full-stack Node application designed to help users discover and recomm
 - delete a comment I made
 - view comments from other users
 - create a new game entry
-- Update a game entry I made
+- Update a saved game entry I made
 - view only my game entries & saved games
-- delete only my game entry
+- delete only my saved game entry
+**Development**
+- sort & the list by the steamee rating
+- see how many users have saved the game to their account
+- search & filter steamee games
+- see more features of games such as genre
+- see more results from Steam
+- generate error when adding a game that is not local co-op
+- share my user collections publicly or with specific users
+- see more store pages/platforms/media - such as boardgames, https://api-docs.igdb.com/#getting-started, PlayStation, Xbox, etc.
 
 ## Wireframes/Screenshots
 ![five_wireframes](assets/wireframes_ct_5.jpg)
 ![two_wireframes](assets/wireframes_ct_2.jpg)
 
 ## Entity Relationship Diagrams
-![erd](assets/ERD_v1.jpg) [^7]
+![erd](assets/steamee-erdv2.jpg) [^7]   
 
-#### Games
+#### Games 
+| **URL**              | **HTTP Verb** |**Actions**|
+|----------------------|---------------|-----------|
+| /games/store          | GET           | index
+| /games/:storeId/new   | GET           | new (with Steam info)
+| /games/newForm/      | GET           | new
+| /games/    | POST           | new (send to savedGames)
+| /games/newForm/getInfo   | POST       | create     | 
+| /games/:id          | GET           | show         |
+
+#### Administrative game routes - users will not be permitted to edit/delete suggested games
 | **URL**              | **HTTP Verb** |**Actions**|
 |----------------------|---------------|-----------|
 | /games/             | GET           | index
-| /games/:id          | GET           | show
-| /games/new          | GET           | new
-| /games              | POST          | create
+| /games/mine         | GET           | index
 | /games/:id/edit     | GET           | edit
 | /games/:id          | PATCH/PUT     | update
 | /games/:id          | DELETE        | destroy   |
 
-#### Steam games route
+#### Saved Games
 | **URL**              | **HTTP Verb** |**Actions**|
 |----------------------|---------------|-----------|
-| /store/             | GET           | index      |
+| /savedGames/mine         | GET           | index
+| /savedGames/:id          | GET           | show
+| /savedGames/new          | GET           | new
+| /savedGames/new          | POST          | create
+| /savedGames/:id/edit     | GET           | edit
+| /savedGames/:id          | PATCH/PUT     | update
+| /savedGames/:id          | DELETE        | destroy   |
 
 #### ratings
 
 | **URL**              | **HTTP Verb** |**Actions**|
 |----------------------------------------|---------------|-----------|
 | /ratings/:gameId                     | POST          | create
+| /ratings/:gameId          |PUT            | update
 | /ratings/delete/:gameID/:ratingId   | DELETE        | destroy   |
 
 #### comments
@@ -86,8 +109,8 @@ This is a full-stack Node application designed to help users discover and recomm
 ## Approach taken
 **Rough Draft Description of Approach:** 
 - On the Steam store screen, an API call will get a filtered list of Steam games to display as cards in the views. 
-- Users can "save" the game to their personal profile if they haven't already been saved, or can view the steamee game card, which will contain user ratings entered on steamee, how many users have saved it. If the user wants to dig deeper, they will with view (show route) the game and be able to see user comments. 
-- When users save the game, a document will be created from the Game model.
+- Users can "save" the game to their personal profile if they haven't already been saved, or can view the steamee game card, which will contain user ratings entered on steamee. If the user wants to dig deeper, they will with view (show route) the game and be able to see user comments. 
+- When users suggest a new game, a document will be created from the Game model.
 (diagrams that describe the relationships between your resources)
 - Eventually, the steamee view-all page will contain other games added by users, in addition to the ones that were saved directly from the steam store API call.
 - Example API Call: https://store.steampowered.com/search/results/?filter=category3=39&tags=3841&ignore_preferences=1&sort_by=Reviews_DESC&supportedlang=english&json=1
@@ -113,32 +136,8 @@ RESULTS:
             "name": "Left 4 Dead Bundle",
             "logo": "https://cdn.cloudflare.steamstatic.com/steam/bundles/233/38smshw5fjvh9vp4/capsule_sm_120.jpg?t=1456861419"
         },
-        {
-            "name": "Left 4 Dead 2",
-            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/550/capsule_sm_120.jpg?t=1666824129"
-        },
-        {
-            "name": "The Binding of Isaac: Rebirth",
-            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/250900/capsule_sm_120.jpg?t=1617174663"
-        },
-        {
-            "name": "BattleBlock Theater®",
-            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/238460/capsule_sm_120.jpg?t=1671827860"
-        },
-        {
-            "name": "Broforce",
-            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/274190/capsule_sm_120.jpg?t=1666986997"
-        },
-        {
-            "name": "Everhood + Rhythm Doctor",
-            "logo": "https://cdn.cloudflare.steamstatic.com/steam/bundles/26852/zqb8h9sjtgo6v5xg/capsule_sm_120.jpg?t=1656112311"
-        },
-        {
-            "name": "Duck Game",
-            "logo": "https://cdn.cloudflare.steamstatic.com/steam/apps/312530/capsule_sm_120.jpg?t=1606522299"
-        },...
 ```
-- STRETCH GOAL: Users can enter their own games, and if they include a steam id (found in the url of the game's store page after app/NNNNNNN, an API call using the GET /broadcast/ajaxgetbatchappcapsuleinfo will link in other information about the game. Example store page url: https://store.steampowered.com/app/312530/Duck_Game/
+- STRETCH GOAL (completed): Users can enter their own games, and if they include a steam id (found in the url of the game's store page after app/NNNNNNN, an API call using the GET /broadcast/ajaxgetbatchappcapsuleinfo will link in other information about the game. Example store page url: https://store.steampowered.com/app/312530/Duck_Game/
 - Example API Call: https://store.steampowered.com/broadcast/ajaxgetbatchappcapsuleinfo?appids=312530&cc=NL&l=english&origin=https:%2F%2Fstore.steampowered.com
 RESULTS:
 ```
@@ -250,14 +249,25 @@ RESULTS:
 ```
 
 ## Installation instructions
+**Using the application**
+- When utilizing steamee, the intention is to interact with games that users have suggested through this application, not with the Steam store page, other than to find other games to suggest without having to go to Steam's store pages.
+- Browse games other users have suggested under the "get steamee" section.
+- Save games to your profile in custom collections that others have suggested by hitting the add heart icon from the get steamee page
+- Edit the collection that your game belongs to easily by hitting the edit heart button from your saved games, or delete by hitting the trash can
+- Suggest games in the "give steamee" section by browsing the Steam store API call results or by creating a new suggestion
+- Leave comments and/or ratings on a game when you view the game from the "get steamee" section or when viewing from your profile of saved games
+
 ## Unsolved problems
+- Multiple of the same Steam game could be added. Had to remove the unique: true attribut of the steamId property in game model as multiple games with no steam ID were able to be added.
+- Editing/deleting games from the game collection - this is meant to be an administrative task, shortterm work arounds are present
+- The Steam store API call is limited, therefore multiple API calls would make the store page more robust/dynamic
 
 ## Project Requirements
 Project 2 overview. [^2]
 Project planning guide. [^1]
 ### MVP
 **MVP for approval:**
-- [ ] Model 1:
+- [x] Model 1:
     - Game:
         - gameSchema:
             - gameName: String
@@ -281,9 +291,9 @@ Project planning guide. [^1]
         }
     })
     ```
-- [ ] Model or Subdocument 2: 
+- [x] Model or Subdocument 2: 
     - example: ratingSchema
-    - additional: commentSchema, savedGamesSchema
+    - additional: commentSchema, savedGamesSchema (became model during development process)
         - savedGamesSchema to have {gameId: {type: Schema.Types.ObjectId, ref: 'Game'}}, {hasPlayed: {type: Boolean}}
     ```
     const ratingSchema = new Schema ({
@@ -302,23 +312,23 @@ Project planning guide. [^1]
         timestamps: true
     })
     ```
-- [ ] API or Seed: Internal Steam Web API, minimum 1 user-created game
-- [ ] Resource RESTful routes:
+- [x] API or Seed: Internal Steam Web API, minimum 1 user-created game
+- [x] Resource RESTful routes: SavedGames
 
 **Stretch Goals:**
-- [ ] Users can add new games to the db
+- [x] Users can add new games to the db
  
 **Technical Requirements:**
-- [ ] Have at least 2 models, not including user (subdocument permitted)
-- [ ] Incorporate API [^4] or seed Database (>=10 documents)
-- [ ] Have complete RESTful routes for at least one resource (GET, POST, PUT & DELETE)
-- [ ] Utilize ODM (Mongoose) to create database table structure & interact with Mongo-Db-stored data
-- [ ] Include a README file that explains how to use app
-- [ ] Route table for RESTful routes included in README
-- [ ] Semantically clean HTML, CSS, and back-end code
+- [x] Have at least 2 models, not including user (subdocument permitted)
+- [x] Incorporate API [^4] or seed Database (>=10 documents)
+- [x] Have complete RESTful routes for at least one resource (GET, POST, PUT & DELETE)
+- [x] Utilize ODM (Mongoose) to create database table structure & interact with Mongo-Db-stored data
+- [x] Include a README file that explains how to use app
+- [x] Route table for RESTful routes included in README
+- [x] Semantically clean HTML, CSS, and back-end code
 - [ ] Be deployed online & accessibl to public
 **Necessary Deliverables:**
-- [ ] Project approval (est date of completion 1/23/23)
+- [x] Project approval (est date of completion 1/23/23)
 - [ ] A working full-stack application, built by me, hosted on internet
 - [ ] A link to hosted working app in URL section of Github repo
 - [ ] A git repo hosted on Github with link to hosted project, frequent commits, dating back to the very beginning of the project
@@ -337,25 +347,23 @@ Project planning guide. [^1]
 - [x] Ensure API functioning properly from template
 - [x] Begin model 1 build 
 - [x] Seed database and/or incoporate API
-- [ ] Create Index & Show Routes & test in Postman
-- [ ] Question - would it be better to store data from an API call for next time, or do the API calls?
-- [ ] Question - fully define the model or modify later?
+- [x] Create Index & Show Routes & test in Postman
 
 **Sprint 3 (Est completion 1/25/23):**
-- [ ] Adjust seed route to script if necessary
-- [x] Create user model
-- [ ] Complete model 1 5 RESTful routes & test in Postman ( - new & edit to be completed)
-- [ ] Create model 2/subdocument
-- [ ] Create user & model 2 routes, and test in Postman
-- [ ] Confirm back-end development working without unnecessary bugs
-- [ ] Set up for liquid-views
+- [ ] Adjust seed route to script if necessary (N/A)
+- [x] Create user model (in boilerplate)
+- [x] Complete model 1 5 RESTful routes & test in Postman 
+- [x] Create model 2/subdocument
+- [x] Create user & model 2 routes, and test in Postman
+- [x] Confirm back-end development working without unnecessary bugs
+- [x] Set up for liquid-views
 
 **Sprint 4 (Est completion 1/27/23):**
-- [ ] Complete liquid views
-- [ ] Enhance styling of pages, get feedback
-- [ ] Update responses & error handling for liquid views
-- [ ] Conduct extensive views testing & ensure DB connection intact
-- [ ] Evaluate readiness for deployment
+- [x] Complete liquid views
+- [x] Enhance styling of pages, get feedback
+- [x] Update responses & error handling for liquid views
+- [x] Conduct extensive views testing & ensure DB connection intact
+- [x] Evaluate readiness for deployment
 - [ ] Merge development branch(s) as needed with main
 
 **Sprint 5 (Est completion 1/29/23):**
@@ -371,8 +379,25 @@ Project planning guide. [^1]
 - [ ] Present deliverable to SEI Cohort & Instructors
 - [ ] Update documentation to incorporate feedback and development opportunities
 
-**Other Links**
-- https://api-docs.igdb.com/#getting-started
+**Image & Icon sources**
+- Three Heart-shaped Red Stones Placed on Tic-tac-toe Game Bord: Photo by Pixabay from Pexels: https://www.pexels.com/photo/board-chalk-chalkboard-color-220057/ 
+- Game Cards - Pixel Heart with color <a href="https://www.flaticon.com/free-icons/pixel" title="pixel icons">Pixel icons created by apien - Flaticon</a>
+- Game Cards:hover - Pixel Heart black <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by apien - Flaticon</a>
+- Icon - edit Heart - <a href="https://www.flaticon.com/free-icons/ui" title="ui icons">Ui icons created by Graphics Plazza - Flaticon</a>
+- Icon - edit heart: hover (heart paper and pencil) - <a href="https://www.flaticon.com/free-icons/love-and-romance" title="love and romance icons">Love and romance icons created by kmg design - Flaticon</a>
+- Icon - trash can closed <a href="https://www.flaticon.com/free-icons/trash" title="trash icons">Trash icons created by Freepik - Flaticon</a>
+- Icon - trash can with hearts <a href="https://www.flaticon.com/free-icons/love-and-romance" title="love and romance icons">Love and romance icons created by juicy_fish - Flaticon</a>
+- Icon - Not Played - Broken Heart <a href="https://www.flaticon.com/free-icons/break-up" title="break-up icons">Break-up icons created by Freepik - Flaticon</a>
+- Icon - played - two hearts <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by itim2101 - Flaticon</a>
+- Icon - Add Heart <a href="https://www.flaticon.com/free-icons/plus-sign" title="plus sign icons">Plus sign icons created by Pixel perfect - Flaticon</a>
+- Icon - saved game: hover <a href="https://www.flaticon.com/free-icons/favorite" title="favorite icons">Favorite icons created by Mia on Jazz the Cat - Flaticon</a>
+- Icon - saved game <a href="https://www.flaticon.com/free-icons/wishlist" title="wishlist icons">Wishlist icons created by Mia on Jazz the Cat - Flaticon</a>
+- Icon - suggest game - <a href="https://www.flaticon.com/free-icons/quality" title="quality icons">Quality icons created by Freepik - Flaticon</a>
+- Icon - add comment/rating/create game - <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Vectors Market - Flaticon</a>
+- Icon - number of comments <a href="https://www.flaticon.com/free-icons/chat-box" title="chat box icons">Chat box icons created by Graphics Plazza - Flaticon</a>
+- Error page - heart break https://pixabay.com/photos/love-heart-broken-sad-unhappy-cry-1281655/
+
+
 
 [^1]: https://git.generalassemb.ly/sei-ec-remote/planning-projects
 [^2]: https://git.generalassemb.ly/sei-ec-remote/project_2
@@ -380,7 +405,7 @@ Project planning guide. [^1]
 [^4]: https://github.com/public-apis/public-apis#business
 [^5]: https://github.com/Revadike/InternalSteamWebAPI/wiki
 [^6]: https://github.com/Revadike/InternalSteamWebAPI/wiki/Get-Search-Results
-[^7]: used figma to create ERD
+[^7]: used Lucid Chart to develop the final ERD. Figma for original (in assets folder)
 
-Guidance for dropdown in bootstrap: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_dropdown-divider&stacked=h
 Color pallette guide: https://icolorpalette.com/download/palette/446754_color_palette.jpg 
+

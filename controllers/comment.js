@@ -9,14 +9,22 @@ const Game = require('../models/game')
 /////////////////////////////////////////////////////
 const router = express.Router()
 
+// Router Middleware
+// If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
+router.use((req, res, next) => {
+	// checking the loggedIn boolean of our session
+	if (req.session.loggedIn) {
+		// if they're logged in, go to the next thing(thats the controller)
+		next()
+	} else {
+		// if they're not logged in, send them to the login page
+		res.redirect('/auth/login')
+	}
+})
+
 /////////////////////////////////////////////////////
 //// Routes                                      ////
 /////////////////////////////////////////////////////
-// Subdocuments are not mongoose models. That means they don't have their own collection, they don't come with the same model methods that we're used to (they have some their own built in)
-// this also means, that a subdoc is never going to be viewed without it's parent document. We'll never see a comment without seeing the game it was commented on first.
-
-// This also means, that when we make a subdocumrnt, we must MUST refer to the parent so that mongoose knows where in mongodb to store this subdocument.
-
 // POST
 // only loggedin users can post comments
 // bc we have to refer to a game, we'll do that in the simplest way via the route
