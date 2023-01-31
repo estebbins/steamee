@@ -1,14 +1,14 @@
 {% block content %}
-    <div class="card mb-4 shadow">
+    <div class="card card-comment mb-4 shadow">
         <div class="card-body">
-            <p>{{ comm.note }}</p>
+            <p style="margin: 5px;">{{ comm.note }}</p>
             <div class="d-flex justify-content-between">
                 <small>author: {{ comm.author.username }}</small>
                 {% if comm.author == userId %}
                     <form action="/comments/delete/{{ game.id }}/{{ comm.id }}?_method=DELETE" method="POST">
                         <input
                         type="submit"
-                        class="btn btn-danger"
+                        class="btn delete"
                         value="X">
                     </form>
                 {% endif %}

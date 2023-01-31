@@ -1,33 +1,35 @@
 {% layout 'layout.liquid'%}
 {% block content %}
-<div class="container-sm">
-    <form action="/savedGames/new" method="POST">
-        <fieldset>
-            <legend>Save {{ game.title }} to your profile</legend>
-            <label class="form-label">Have you played {{ game.title }} in Local Co-Op?</label>
-            <input 
-                type="checkbox" 
-                name="hasPlayed" 
-                class="form-check-input"
-            >
-            <label class="form-label">Which collection would you like to save this to?</label>
-            <input
-                type="text" 
-                name="userCollection" 
-                class="form-control"
-                placeholder="Collection Name"
-                value="My Saved Games"
-                required
-            >
-            <input
-            type="hidden" 
-            name="savedGameRef" 
-            class="form-control"
-            value="{{ gameId }}"
-            required
-            >
-        </fieldset>
-        <input type="submit" value="Save Game" class="btn btn-success">
-    </form>
-</div>
+    <div class="container-md col-lg-4">
+        <form action="/savedGames/new" method="POST">
+            <fieldset>
+                <legend>Save {{ game.title }} to your profile</legend>
+                <hr>
+                <label class="form-label">Have you played {{ game.title }} in Local Co-Op?</label>
+                <input 
+                    type="checkbox" 
+                    name="hasPlayed" 
+                    class="form-check-input"
+                    style="margin-top: 20px;"
+                >
+                <label class="form-label">Which collection would you like to save this to?</label>
+                <input
+                    type="text" 
+                    name="userCollection" 
+                    class="form-control"
+                    placeholder="Collection Name"
+                    value="My Saved Games"
+                    required
+                >
+                <input
+                    type="hidden" 
+                    name="savedGameRef" 
+                    class="form-control"
+                    value="{{ gameId }}"
+                    required
+                >
+            </fieldset>
+            <input type="submit" value="Save Game" class="btn my-btn">
+        </form>
+    </div>
 {% endblock %}

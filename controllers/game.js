@@ -15,7 +15,6 @@ const ratingSchema = require('../models/ratings')
 const router = express.Router()
 
 // Router Middleware
-// Authorization middleware
 // If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
 // !Same middleware as controllers/middleware.js. Can move if needed
 router.use((req, res, next) => {

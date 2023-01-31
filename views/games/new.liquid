@@ -4,7 +4,7 @@
     <form action="/games" method="POST">
         {% if gameInfo %}
             <fieldset>
-                <legend>Be the first to Recommend {{ gameInfo.title }} to Steamee Users!</legend>
+                <legend>Be the first to recommend {{ gameInfo.title }} to Steamee Users!</legend>
                 <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ gameInfo.tiny_capsule }}">
                 <input 
                     type="hidden" 
@@ -61,7 +61,7 @@
                 >
             </fieldset>
         {% endif %}
-        <input type="submit" value="Save Game" class="btn btn-success">
+        <input type="submit" value="Save Game" class="btn my-btn">
     </form>
 </div>
 {% endblock %}

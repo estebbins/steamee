@@ -265,3 +265,42 @@ ul .home::before {
 .recommend:hover {
     color: white;
 }
+legend {
+    font-family: 'Poiret One', cursive;
+}
+label {
+    margin-top: 20px;
+}
+.my-btn {
+    margin-top: 20px;
+    background: rgb(107,2,0);
+    background: linear-gradient(0deg, rgba(107,2,0,1) 8%, rgba(214,4,0,1) 25%, rgba(249,5,0,1) 74%, rgba(178,3,0,1) 91%);
+    font-family: 'Poiret One', cursive;
+    font-size: 18px;
+}
+.card-comment {
+    height: unset;
+    width: unset;
+    min-height: 200px;
+    max-height: unset;
+    max-width: 330px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/9520/9520068.png');
+    background-size: 100% 80%;
+    background-position: top;
+    background-repeat: no-repeat;
+    filter: drop-shadow(5px 5px 1px rgb(105, 85, 85));
+    border: none!important;
+    box-shadow: none!important;
+}
+.card-comment:hover{
+    background-image: url('https://cdn-icons-png.flaticon.com/512/9520/9520068.png');
+}
+.add-comment {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3032/3032276.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+    width: 50px!important;
+    margin-right: 20px;
+}
