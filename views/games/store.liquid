@@ -2,6 +2,11 @@
 {% block content %}
     <div class="container-lg">
         <h2 class="display-6">Games from <a href="https://store.steampowered.com/" class="display-6 steamlink">Steam&#174</a></h2>
+        <h6>Explore the top results (by user-reviews) from the Steam&#174 store that are shared/split screen & local co-op.</h6>
+        <h6 style="font-size: 14px!important; display: inline!important;">The games below are not suggestions from steamee users like you - for those click here -></h6><a href="/games" class="btn view" style="width: 30px!important; height: 30px!important;"></a>
+        <div>
+        <h6 style="font-size: 14px!important; display: inline!important;">If you know of a game on Steam&#174 that you'd like to suggest but can't find it below, please find the ID on the store page and add it through the create suggestion form here -> </h3><a href="/newForm" style="width: 30px!important; height: 30px!important;" class="btn add"></a>
+        </div>
         <div class="row">
             {% for storeGame in storeGames %}
             <div class="card">

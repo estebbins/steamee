@@ -270,6 +270,7 @@ ul .home::before {
 }
 .recommend:hover {
     color: white;
+    text-shadow: black 1px 1px 1px;
 }
 legend {
     font-family: 'Poiret One', cursive;
