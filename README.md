@@ -36,7 +36,7 @@ This is a full-stack Node application designed to help users discover and sugges
 - Update a saved game entry I made
 - view only my game entries & saved games
 - delete only my saved game entry
-**Development**
+###Development
 - sort & the list by the steamee rating
 - see how many users have saved the game to their account
 - search & filter steamee games
@@ -51,7 +51,7 @@ This is a full-stack Node application designed to help users discover and sugges
 ![two_wireframes](assets/wireframes_ct_2.jpg)
 
 ## Entity Relationship Diagrams
-![erd](assets/steamee-erdv2.jpg) [^7]   
+![erd](assets/steamee-erdv2.jpeg) [^7]   
 
 #### Games 
 | **URL**              | **HTTP Verb** |**Actions**|
@@ -258,7 +258,7 @@ RESULTS:
 - Leave comments and/or ratings on a game when you view the game from the "get steamee" section or when viewing from your profile of saved games
 
 ## Unsolved problems
-- Multiple of the same Steam game could be added. Had to remove the unique: true attribut of the steamId property in game model as multiple games with no steam ID were able to be added.
+- Multiple of the same Steam game could be added. Had to remove the unique: true e of the steamId property in game model as multiple games with no steam ID were able to be added.
 - Editing/deleting games from the game collection - this is meant to be an administrative task, shortterm work arounds are present
 - The Steam store API call is limited, therefore multiple API calls would make the store page more robust/dynamic
 
