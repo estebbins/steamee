@@ -23,8 +23,10 @@ router.get('/mine', (req, res) => {
         // populate subdoc
         .populate('savedGameRef')
 		.then(savedGames => {
+            // create array
             const userCollections = []
             savedGames.forEach(savedGame => {
+                // If user collections does not already have the collection name contained, then push the collection name to ensure only unique collections are sent
                 if(!userCollections.includes(savedGame.userCollection)) {
                     userCollections.push(savedGame.userCollection)
                 }
@@ -57,6 +59,7 @@ router.get('/:gameId/new', (req, res) => {
 // create -> POST route that actually calls the db and makes a new document
 router.post('/new', (req, res) => {
     req.body.owner = req.session.userId
+    // If box is checked then send true, otherwise send false
     req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
     console.log('add saved game req body', req.body)
     SavedGame.create(req.body)
@@ -83,7 +86,6 @@ router.get('/:savedGameId/edit', (req, res) => {
             // console.log(savedGame)
             const game = savedGame.savedGameRef
             // Render the edit page
-            // !Do we need the req.session info?
 			res.render(`savedGames/edit`, { savedGame, game, ...req.session })
 		})
 		.catch((error) => {
@@ -98,7 +100,7 @@ router.get('/:savedGameId/edit', (req, res) => {
 router.put('/:savedGameId', (req, res) => {
 	const savedGameId = req.params.savedGameId
     // Find the game and update it using the req.body
-    // ! Might need to duplicate within saved games controller as well/put parameters on this
+        // If box is checked then send true, otherwise send false
     req.body.hasPlayed = req.body.hasPlayed === 'on' ? true : false
 	SavedGame.findByIdAndUpdate(savedGameId, req.body, { new: true })
 		.then(savedGame => {
@@ -117,10 +119,9 @@ router.get('/:gameId', (req, res) => {
 	SavedGame.findById(gameId)
         .populate('savedGameRef')
 		.then(savedGame => {
-            // Render show.liquid, and include the game & session data destructured
+            // Create variable for game for ease of use in liquid
             const game = savedGame.savedGameRef
-            console.log('ratings', game.ratings)
-            console.log('ratings', game.ratings.length)
+            // Render show.liquid, and include the game & session data destructured
             res.render(`savedGames/show`, { savedGame, game, ...req.session })
 		})
 		.catch((error) => {

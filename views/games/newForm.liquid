@@ -1,21 +1,29 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-sm">
-            <form action="/games/newForm/getInfo" method="POST">
-                <legend>Add Game with Steam ID (preferred)</legend>
-                <label class="form-label">Enter Steam App Id: [instructions on how to find] </label>
-                <input 
-                type="number" 
-                name="steamId" 
-                class="form-control"
-                placeholder="Enter Steam App ID"
-                >
-                <input type="submit" value="Search Steam" class="btn my-btn">
-            </form>
-            <hr>
-            <form action="/games/" method="POST">
-                <legend>Add Game with No Steam ID</legend>
-                    <label class="form-label">Title: </label>
+        <form action="/games/newForm/getInfo" method="POST">
+            <fieldset>
+                <legend>Add Game with Steam&#174 ID (preferred)</legend>
+                <label class="form-label">Enter Steam&#174 App ID:</label>
+                <h6 style="font-size: 14px!important;">Go to the game's Steam&#174 storepage in your browser and look at the URL of the page. Find the code (3-8 digits) after "app/", e.g., Unrailed https://store.steampowered.com/app/1016920/Unrailed/ - the App ID is 1016920</h6>
+                    <input 
+                        type="number" 
+                        name="steamId" 
+                        class="form-control"
+                        placeholder="Enter Steam App ID"
+                    >
+            </fieldset>
+            <input 
+                type="submit" 
+                value="Search Steam" 
+                class="btn my-btn"
+            >
+        </form>
+        <hr>
+        <form action="/games/" method="POST">
+            <fieldset>
+                <legend>Add Game with No Steam&#174 ID</legend>
+                <label class="form-label">Title: </label>
                     <input 
                         type="text" 
                         name="title" 
@@ -23,14 +31,14 @@
                         placeholder="name of game"
                         required
                     >
-                    <label class="form-label">Logo:</label>
+                <label class="form-label">Logo:</label>
                     <input 
                         type="text" 
                         name="logo" 
                         class="form-control"
                         placeholder="logo url"
                     >
-                    <label class="form-label">Type:</label>
+                <label class="form-label">Type:</label>
                     <input 
                         type="text" 
                         name="type" 
@@ -38,8 +46,8 @@
                         placeholder="enter game type (e.g., video game, board game)"
                         value="video game"
                     >
-                </fieldset>
-                <input type="submit" value="Save Game" class="btn my-btn">
-            </form>
+            </fieldset>
+            <input type="submit" value="Save Game" class="btn my-btn">
+        </form>
     </div>
 {% endblock %}

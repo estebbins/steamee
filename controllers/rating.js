@@ -54,10 +54,10 @@ router.post('/:gameId', (req, res) => {
 router.put('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
     // Find the game and update it using the req.body
-    // ! Might need to duplicate within saved games controller as well/put parameters on this
     const ratingId = req.body.id
 	Game.findById(gameId)
 		.then(game => {
+            // only update the original rating from the user
             game.ratings.forEach(rating => {
                 if(rating.id == ratingId) {
                     rating.score = req.body.score
@@ -78,18 +78,19 @@ router.put('/:gameId', (req, res) => {
 // Delete rating route
 // DELETE -> /ratings/delete/<someGameId>/<someRatingId>
 router.delete('/delete/:gameId/:ratingId', (req, res) => {
+    // Destructure the req params
     const { gameId, ratingId } = req.params
 
     Game.findById(gameId)
         .then(game => {
-            // get rating, we'll use the build in subdoc method called .id()
+            // get rating, we'll use the built in subdoc method called .id()
             const theRating = game.ratings.id(ratingId)
             console.log('this is the rating to be delete: \n', theRating)
             // then we want to make sure the user is logged in, and that they are the author of the rating.
             if (req.session.loggedIn) {
                 // if they are, allow them to delete
                 if (theRating.author == req.session.userId) {
-                    // we can use another built in method, remove()
+                    // remove the rating
                     theRating.remove()
                     game.save()
                     // res.sendStatus(204) //send 204 no content
@@ -102,8 +103,7 @@ router.delete('/delete/:gameId/:ratingId', (req, res) => {
                 // otherwise, send a 401 unauthorized status
                 // res.sendStatus(401)
                 res.redirect(`/error?error=You%20Are%20not%20allowed%20to%20delete%20this%20rating`)
-            }
-            
+            }    
         })
         .catch(err => {
             console.log(err)

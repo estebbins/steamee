@@ -1,97 +1,127 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-<div class="container-md">
-    <div class="row justify-content-left">
-        <article class="col-sm">
-        <h2>{{ game.title }}</h2>
-        <div class="image text-center" style="background-image: url('{{ game.logo}}'); background-position: left!important;">
-        </div>
-        {% if game.ratings.length > 0 %}
-            <h3>steamee score: <span class="score">{{ game.avgRating }}</span>/5</h3><small>({{ game.ratings.length }} rating(s))</small>
-        {% else %}
-            <p><small>no ratings yet...</small></p>
-        {% endif %}
-        {% if loggedIn %}
-            {% if userRateHistory %}
-                <div style="white-space: nowrap!important;">
-                        <form action="/ratings/{{ game.id }}?_method=PUT" method="POST" style="display: inline!important;">
-                            <fieldset style="display: inline!important;">
-                                <label class="form-label">Change Prior Rating?</label>
-                                <input type="number" name="score" class="form-control-mb-1"
-                                value="{{ userScore.score}}"
-                                style="width: 50px;">
-                                <label class="form-label">/5</label>
-                                <input type="hidden" name="id" class="form-control-mb-1"
-                                value="{{ userScore.id }}">
-                            </fieldset>
-                            <input type="submit" class="btn edit" value="" style="margin-right: 0!important;">
-                        </form>
-                        <form action="/ratings/delete/{{ game.id }}/{{ userScore.id }}?_method=DELETE" method="POST" style="display: inline!important;">
-                            <fieldset style="display: inline!important;">
-                                <input
-                                type="submit"
-                                class="btn delete"
-                                value="delete rating"
-                                style="margin-left: 0!important;"
+    <div class="container-md">
+        <div class="row justify-content-left">
+            <article class="col-sm">
+                <h2>{{ game.title }}</h2>
+                <div class="image text-center" style="background-image: url('{{ game.logo}}'); background-position: left!important;">
+                </div>
+                {% if game.ratings.length > 0 %}
+                    <h3>steamee score: <span class="score">{{ game.avgRating }}</span>/5</h3><small>({{ game.ratings.length }} rating(s))</small>
+                {% else %}
+                    <p><small>no ratings yet...</small></p>
+                {% endif %}
+                {% if loggedIn %}
+                    {% if userRateHistory %}
+                        <div style="white-space: nowrap!important;">
+                                <form action="/ratings/{{ game.id }}?_method=PUT" method="POST" style="display: inline!important;">
+                                    <fieldset style="display: inline!important;">
+                                        <label class="form-label">Change Prior Rating?</label>
+                                            <input 
+                                                type="number" 
+                                                name="score" 
+                                                class="form-control-mb-1"
+                                                value="{{ userScore.score}}"
+                                                style="width: 50px;"
+                                            >
+                                        <label class="form-label">/5</label>
+                                            <input 
+                                                type="hidden" 
+                                                name="id" 
+                                                class="form-control-mb-1"
+                                                value="{{ userScore.id }}"
+                                            >
+                                    </fieldset>
+                                    <input 
+                                        type="submit" 
+                                        class="btn edit" 
+                                        value="" 
+                                        style="margin-right: 0!important;"
+                                    >
+                                </form>
+                                <form action="/ratings/delete/{{ game.id }}/{{ userScore.id }}?_method=DELETE" method="POST" style="display: inline!important;">
+                                    <fieldset style="display: inline!important;">
+                                        <input
+                                            type="submit"
+                                            class="btn delete"
+                                            value="delete rating"
+                                            style="margin-left: 0!important;"
+                                        >
+                                    </fieldset>
+                                </form>
+                        </div>
+                    {% else %}
+                        <div style="white-space: nowrap!important;">
+                            <form action="/ratings/{{ game.id }}" method="POST" style="white-space: nowrap!important;">
+                                <fieldset style="display: inline!important;">
+                                    <label class="form-label"> add rating:</label>
+                                        <input 
+                                            type="number" 
+                                            name="score" 
+                                            class="form-control-mb-1" 
+                                            style="width: 50px;"
+                                        >
+                                    <label class="form-label">/5</label>
+                                </fieldset>
+                                <input 
+                                    type="submit" 
+                                    class="btn add" 
+                                    value=""
                                 >
+                            </form>
+                        </div>
+                    {% endif %}
+                {%else%}
+                    <div class="col-md-6">
+                        <small>If you'd like to rate this game, please log in...</small>
+                    </div>
+                {% endif %}
+            </article>
+            <article class="col-sm">
+                <h3>Comments</h3>
+                {% if loggedIn %}
+                <div class="col-md-6">
+                    <span style="white-space: nowrap!important;">
+                        <form action="/comments/{{ game.id }}" method="POST" style="display: inline!important;">
+                            <fieldset style="display: inline!important;">
+                                <label class="form-label">comment:</label>
+                                    <input 
+                                        type="text" 
+                                        name="note" 
+                                        class="form-control-mb-1"
+                                    >
                             </fieldset>
+                            <input type="submit" class="btn add" value="">
                         </form>
+                    </span>
                 </div>
-            {% else %}
-                <div style="white-space: nowrap!important;">
-                    <form action="/ratings/{{ game.id }}" method="POST" style="white-space: nowrap!important;">
-                        <fieldset style="display: inline!important;">
-                            <label class="form-label"> add rating:</label>
-                            <input type="number" name="score" class="form-control-mb-1" style="width: 50px;">
-                            <label class="form-label">/5</label>
-                        </fieldset>
-                        <input type="submit" class="btn add" value="">
-                    </form>
-                </div>
-            {% endif %}
-        {%else%}
-            <div class="col-md-6">
-                <small>If you'd like to rate this game, please log in...</small>
-            </div>
-        {% endif %}
+                {%else%}
+                    <div class="col-md-6">
+                        <small>If you'd like to leave a comment, please log in...</small>
+                    </div>
+                {% endif %}
+                {% if game.comments.length > 0 %}
+                    <div class="container-sm justify-content-center"></div>
+                    {% for comm in game.comments %}
+                        {% render '../comment.liquid', comm: comm, userId: userId, game: game %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-6">
+                        <small>no comments yet...</small>
+                    </div>
+                {% endif %}
+                {% comment %}
+                
+                    Activate only when deleting an entire game is necessary (actually gives everyone ability right now...)
+                    {% endcomment %}
+                {% if session.username == larrydavid2  %}
+                        <form action="/games/{{ game.id }}?_method=DELETE" method="POST" style="display: inline!important;">
+                            <input type="submit" class="btn delete" value="">
+                        </form>
+                {% endif %}
+                
         </article>
-        <article class="col-sm">
-        <h3>Comments</h3>
-        {% if loggedIn %}
-        <div class="col-md-6">
-            <span style="white-space: nowrap!important;">
-                <form action="/comments/{{ game.id }}" method="POST" style="display: inline!important;">
-                    <fieldset style="display: inline!important;">
-                        <label class="form-label">comment:</label>
-                        <input type="text" name="note" class="form-control-mb-1">
-                    </fieldset>
-                    <input type="submit" class="btn add" value="">
-                </form>
-            </span>
         </div>
-        {%else%}
-            <div class="col-md-6">
-                <small>If you'd like to leave a comment, please log in...</small>
-            </div>
-        {% endif %}
-        {% if game.comments.length > 0 %}
-            <div class="container-sm justify-content-center"></div>
-            {% for comm in game.comments %}
-                {% render '../comment.liquid', comm: comm, userId: userId, game: game %}
-            {% endfor %}
-        {% else %}
-            <small>no comments yet...</small>
-        {% endif %}
-        {% comment %}
-            Activate only when deleting an entire game is necessary (actually gives everyone ability right now...)
-        {% if session.username == larrydavid2  %}
-                <form action="/games/{{ game.id }}?_method=DELETE" method="POST" style="display: inline!important;">
-                    <input type="submit" class="btn delete" value="">
-                </form>
-        {% endif %}
-        {% endcomment %}
-    </article>
     </div>
-</div>
 {% endblock %}
        

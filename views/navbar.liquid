@@ -1,5 +1,5 @@
 {% block content %}
-<nav class="navbar navbar-expand-md navback" ]>
+<nav class="navbar navbar-expand-md navback">
     <div class="container-fluid">
         <a href="/" class="navbar-brand navlogo">steamee</a>
         {% if loggedIn %}
@@ -8,7 +8,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
             {% if loggedIn %}
                 <li class="nav-item dropdown">

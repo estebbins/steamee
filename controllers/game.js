@@ -16,7 +16,6 @@ const router = express.Router()
 
 // Router Middleware
 // If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
-// !Same middleware as controllers/middleware.js. Can move if needed
 router.use((req, res, next) => {
 	// checking the loggedIn boolean of our session
 	if (req.session.loggedIn) {
@@ -36,23 +35,22 @@ router.use((req, res, next) => {
 // Index ALL recommended games stored to database
 router.get('/', (req, res) => {
 	Game.find({})
+        // populate the subdocuments
         .populate('owner', '-password')
         .populate('comments.author', '-password')
         .populate('ratings', '-password')
 		.then(games => {
-            if(req.session.loggedIn){
-                SavedGame.find({owner: req.session.userId})
-                    .populate('savedGameRef')
-                    .then(savedGames => {
-                        res.render('games/index', { games, savedGames, ...req.session })
-                    })
-                    .catch(error => {
-                        res.redirect(`/error?error=${error}`)
-                    })
-		    } else {
-                res.render('games/index', { games, savedGames, ...req.session })
-            }
-    })
+            console.log(games)
+            // find games the user has saved already
+            SavedGame.find({owner: req.session.userId})
+                .populate('savedGameRef')
+                .then(savedGames => {
+                    res.render('games/index', { games, savedGames, ...req.session })
+                })
+                .catch(error => {
+                    res.redirect(`/error?error=${error}`)
+                })
+        })
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
@@ -187,6 +185,7 @@ router.post('/', (req, res) => {
 
 // EDIT - GET
 // edit route -> GET that takes us to the edit form view
+// !Route is not user-facing
 router.get('/:gameId/edit', (req, res) => {
 	// we need to get the id
 	const gameId = req.params.gameId
@@ -194,7 +193,6 @@ router.get('/:gameId/edit', (req, res) => {
 	Game.findById(gameId)
 		.then(game => {
             // Render the edit page
-            // !Do we need the req.session info?
 			res.render('games/edit', { game })
 		})
 		.catch((error) => {
@@ -205,10 +203,10 @@ router.get('/:gameId/edit', (req, res) => {
 
 // UPDATE - PUT
 // update route
+// !Route is not user-facing
 router.put('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
     // Find the game and update it using the req.body
-    // ! Might need to duplicate within saved games controller as well/put parameters on this
 	Game.findByIdAndUpdate(gameId, req.body, { new: true })
 		.then(game => {
             // Redirect to show route after game updated
@@ -229,30 +227,17 @@ router.get('/:gameId', (req, res) => {
         .populate('ratings', '-password')
         .populate('ratings.author', '-password')
 		.then(game => {
-            // Render show.liquid, and include the game & session data destructured. 
-            // if (req.session.loggedIn){
-            //     SavedGame.find({id: gameId, owner: req.session.userId})
-            //         .then(savedGame => {
-            //             console.log(savedGame)
-            //             res.render('games/show', { game, savedGame, ...req.session })
-            //         })
-            //         .catch((error) => {
-            //             res.redirect(`/error?error=${error}`)
-            //         })
-            // } else {
-                // console.log(game.ratings.includes(req.session.userId))
-                // console.log(game.ratings)
-                let userRateHistory
-                let userScore
-                // https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
-                if (game.ratings.some(score => score.author.id == req.session.userId)) {
-                    userRateHistory = true
-                    userScore = game.ratings.find(score => score.author.id == req.session.userId)
-                } else {
-                    userRateHistory = false
-                }
-                res.render('games/show', { game, userRateHistory, userScore, ...req.session })
-            // }
+            // Determine if user has rated this game previously to avoid multiple ratings per user on the same game.
+            let userRateHistory
+            let userScore
+            if (game.ratings.some(score => score.author.id == req.session.userId)) {
+                userRateHistory = true
+                userScore = game.ratings.find(score => score.author.id == req.sessionuserId)
+            } else {
+                userRateHistory = false
+            }
+            // If user history is true, a different form will render.
+            res.render('games/show', { game, userRateHistory, userScore, ...req.session })
 		})
 		.catch((error) => {
             console.log(error)
@@ -262,6 +247,7 @@ router.get('/:gameId', (req, res) => {
 
 // DELETE - DELETE
 // delete route to delete a single game
+// ! Not intended to be user facing, still needed for db management
 router.delete('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
     // Find game & delete

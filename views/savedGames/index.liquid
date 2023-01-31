@@ -22,7 +22,12 @@
                                 <div class="btn-group mine1">
                                     <a href="/savedGames/{{ savedGame.id }}/edit" class="btn edit" alt="edit saved game info"></a>
                                     <form action="/savedGames/{{ savedGame.id }}?_method=DELETE" method="POST">
-                                        <input type="submit" value="" alt="delete from saved" class="btn delete">
+                                        <input 
+                                            type="submit" 
+                                            value="" 
+                                            alt="delete from saved" 
+                                            class="btn delete"
+                                        >
                                     </form>
                                 </div>
                             {% endif %}
