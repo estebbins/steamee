@@ -1,35 +1,38 @@
 {% layout 'layout.liquid'%}
 {% block content %}
-<div class="container-sm">
-    <form action="/savedGames/{{ savedGame.id}}?_method=PUT" method="POST">
-        <fieldset>
-            <legend>Edit your saved game details for: {{ game.title }}:</legend>
-            <label class="form-label">Have you played {{ savedGame.title }} in Local Co-Op?</label>
-            {% if savedGame.hasPlayed %}
-                <input 
-                checked
-                type="checkbox" 
-                name="hasPlayed" 
-                class="form-check-input"
+    <div class="container-md col-lg-4"">
+        <form action="/savedGames/{{ savedGame.id}}?_method=PUT" method="POST">
+            <fieldset>
+                <legend>Edit your saved game details for: {{ savedGame.savedGameRef.title }}:</legend>
+                <hr>
+                <label class="form-label">Have you played {{ savedGame.savedGameRef.title }} in Local Co-Op?</label>
+                {% if savedGame.hasPlayed %}
+                    <input 
+                    checked
+                    type="checkbox" 
+                    name="hasPlayed" 
+                    class="form-check-input"
+                    style="margin-top: 20px;"
+                    >
+                {% else %}
+                    <input 
+                    type="checkbox" 
+                    name="hasPlayed" 
+                    class="form-check-input"
+                    style="margin-top: 20px;"
+                    >
+                {% endif %}
+                <label class="form-label">Which collection would you like to save this to?</label>
+                <input
+                    type="text" 
+                    name="userCollection" 
+                    class="form-control"
+                    placeholder="Collection Name"
+                    value="{{ savedGame.userCollection }}"
+                    required
                 >
-            {% else %}
-                <input 
-                type="checkbox" 
-                name="hasPlayed" 
-                class="form-check-input"
-                >
-            {% endif %}
-            <label class="form-label">Which collection would you like to save this to?</label>
-            <input
-                type="text" 
-                name="userCollection" 
-                class="form-control"
-                placeholder="Collection Name"
-                value="{{ savedGame.userCollection }}"
-                required
-            >
-        </fieldset>
-        <input type="submit" value="Save Game" class="btn btn-success">
-    </form>
-</div>
+            </fieldset>
+            <input type="submit" value="Save Game" class="btn my-btn">
+        </form>
+    </div>
 {% endblock %}

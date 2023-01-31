@@ -1,5 +1,8 @@
 {% layout 'layout.liquid' %}
 {% block content %}
+{% comment %}
+nothing directs to this page from the user's perspective
+{% endcomment %}
 <div class="container-sm">
     <form action="/games?_method=PUT" method="POST">
         <fieldset>

@@ -8,8 +8,7 @@
                 <div class="card-title">
                     <h5 class="card-header-override text-center">{{ game.title }}</h5>
                 </div>
-                <div class="image text-center">
-                    <img class="card-img-center mx-auto" src="{{ game.logo }}" alt="{{ game.title }} logo or image">
+                <div class="image text-center" style="background-image: url('{{ game.logo}}');">
                 </div>
                 <div class="btn-group mine1">
                     {% if game.ratings.length > 0 %}

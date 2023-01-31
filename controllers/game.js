@@ -109,8 +109,8 @@ router.get('/mine', (req, res) => {
     // Find owner of game
 	Game.find({ owner: req.session.userId })
         // !Might need to populate (below from class app)
-        // !.populate('owner', 'username')
-        // !.populate('comments.author', '-password')
+        .populate('owner', 'username')
+        .populate('comments.author', '-password')
 		.then(games => {
             // Render games/index liquid view, and include destructured session info
 			res.render('games/index', { games, ...req.session })
@@ -180,6 +180,7 @@ router.post('/', (req, res) => {
             res.redirect(`/savedGames/${game.id}/new`)
         })
 		.catch(error => {
+            console.log(error)
 			res.redirect(`/error?error=${error}`)
 		})
 })

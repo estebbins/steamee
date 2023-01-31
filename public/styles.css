@@ -1,5 +1,5 @@
 body {
-    background-color: #2d0100;
+    background-color: #72251c;
     color: #FF8F8D;
     font-family: 'Rubik', cursive;
 }
@@ -124,10 +124,11 @@ ul .home::before {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: black solid 3px!important;
+    border: none;
 }
 .card:hover {
     background-image: url('https://cdn-icons-png.flaticon.com/512/3599/3599720.png');
+    transition: .5s;
 }
 .card-title {
     height: 120px;
@@ -142,8 +143,11 @@ ul .home::before {
     width: 230px;
 }
 .image {
-    width: 324px;
-    height: 45px;
+    width: 324px!important;
+    height: 45px!important;
+    background-size: contain!important;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 /* USE FOR REGULAR INDEX */
 .score {
@@ -152,6 +156,7 @@ ul .home::before {
     background-position: center;
     background-repeat: no-repeat;
     color: white;
+    text-shadow: black 1px 1px 1px;
 }
 .score-0 {
     background-image: url('https://cdn-icons-png.flaticon.com/512/1000/1000621.png');
@@ -160,12 +165,14 @@ ul .home::before {
     background-repeat: no-repeat;
     color: transparent;
 }
+
 .comment {
-    background-image: url('https://cdn-icons-png.flaticon.com/512/4526/4526521.png');
+    background-image: url('https://cdn-icons-png.flaticon.com/512/8800/8800004.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     color: white;
+    text-shadow: black 1px 1px 1px;
 }
 .save {
     background-image: url('https://cdn-icons-png.flaticon.com/512/3179/3179393.png');
@@ -174,7 +181,7 @@ ul .home::before {
     background-repeat: no-repeat;
 }
 .saved {
-    background-image: url('https://cdn-icons-png.flaticon.com/512/2102/2102633.png');
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3683/3683030.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -183,8 +190,10 @@ ul .home::before {
     width: 38px;
 }
 .saved:hover {
-    color: #feccb5!important;
+    color: white;
+    text-shadow: black 1px 1px 1px;
     white-space: nowrap;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/3683/3683026.png');
 }
 .played {
     background-image: url('https://cdn-icons-png.flaticon.com/128/4009/4009283.png');
@@ -249,11 +258,8 @@ ul .home::before {
     overflow: unset;
 }
 .steamlink {
-    font-size: calc(1.375rem + 1.5vw);
     color: #ff8f8d!important;
-    padding: 0;
-    line-height: 39.486px!important;
-    margin-bottom: 8px;
+    text-decoration: none;
 }
 .recommend {
     background-image: url('https://cdn-icons-png.flaticon.com/512/3500/3500896.png');
@@ -295,8 +301,8 @@ label {
 .card-comment:hover{
     background-image: url('https://cdn-icons-png.flaticon.com/512/9520/9520068.png');
 }
-.add-comment {
-    background-image: url('https://cdn-icons-png.flaticon.com/512/3032/3032276.png');
+.add {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/753/753317.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

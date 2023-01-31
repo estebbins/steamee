@@ -4,7 +4,8 @@
     <div class="row justify-content-left">
         <article class="col-sm">
         <h2>{{ game.title }}</h2>
-        <img src="{{ game.logo }}" alt="{{ game.title }} logo or image">
+        <div class="image text-center" style="background-image: url('{{ game.logo}}'); background-position: left!important;">
+        </div>
         {% if game.ratings.length > 0 %}
             <h3>steamee score: <span class="score">{{ game.avgRating }}</span>/5</h3><small>({{ game.ratings.length }} rating(s))</small>
         {% else %}
@@ -23,7 +24,7 @@
                                 <input type="hidden" name="id" class="form-control-mb-1"
                                 value="{{ userScore.id }}">
                             </fieldset>
-                            <input type="submit" class="btn edit" value="edit rating" style="margin-right: 0!important;">
+                            <input type="submit" class="btn edit" value="" style="margin-right: 0!important;">
                         </form>
                         <form action="/ratings/delete/{{ game.id }}/{{ userScore.id }}?_method=DELETE" method="POST" style="display: inline!important;">
                             <fieldset style="display: inline!important;">
@@ -37,15 +38,14 @@
                         </form>
                 </div>
             {% else %}
-                <div class="col-md-6">
-                    <form action="/ratings/{{ game.id }}" method="POST">
-                        <fieldset>
-                            <legend>Add Rating</legend>
-                            <label class="form-label">rating:</label>
-                            <input type="number" name="score" class="form-control-mb-1">
+                <div style="white-space: nowrap!important;">
+                    <form action="/ratings/{{ game.id }}" method="POST" style="white-space: nowrap!important;">
+                        <fieldset style="display: inline!important;">
+                            <label class="form-label"> add rating:</label>
+                            <input type="number" name="score" class="form-control-mb-1" style="width: 50px;">
                             <label class="form-label">/5</label>
                         </fieldset>
-                        <input type="submit" class="btn btn-success" value="add rating">
+                        <input type="submit" class="btn add" value="">
                     </form>
                 </div>
             {% endif %}
@@ -65,7 +65,7 @@
                         <label class="form-label">comment:</label>
                         <input type="text" name="note" class="form-control-mb-1">
                     </fieldset>
-                    <input type="submit" class="btn add-comment" value="">
+                    <input type="submit" class="btn add" value="">
                 </form>
             </span>
         </div>
@@ -82,6 +82,14 @@
         {% else %}
             <small>no comments yet...</small>
         {% endif %}
+        {% comment %}
+            Activate only when deleting an entire game is necessary (actually gives everyone ability right now...)
+        {% if session.username == larrydavid2  %}
+                <form action="/games/{{ game.id }}?_method=DELETE" method="POST" style="display: inline!important;">
+                    <input type="submit" class="btn delete" value="">
+                </form>
+        {% endif %}
+        {% endcomment %}
     </article>
     </div>
 </div>

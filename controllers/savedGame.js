@@ -31,6 +31,7 @@ router.get('/mine', (req, res) => {
             })
             // console.log(games)
             // let game = savedGame.savedGameRef
+            console.log(savedGames)
             res.render('savedGames/index', { savedGames, userCollections, ...req.session })
 		})
 		.catch(error => {
