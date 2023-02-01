@@ -271,12 +271,35 @@ Project planning guide. [^1]
 **MVP for approval:**
 - [x] Model 1:
     - Game:
-        - gameSchema:
-            - gameName: String
-            - gameLogo: String (will be looking for url)
-            - ratings: [ratingSchema]
-            - comments: [commentSchema]
-            - owner: Schema.Types.ObjectId, ref: 'User'
+```javascript
+const gameSchema = new Schema({
+		title: { 
+            type: String, 
+            required: true 
+        },
+		logo: { 
+            type: String, 
+        },
+        type: {
+            type: String,
+            required: true,
+            default: 'video game'
+        },
+        steamId: {
+            type: Number,
+        },
+        ratings: [ratingSchema],
+        comments: [commentSchema],
+		owner: {
+			type: Schema.Types.ObjectID,
+			ref: 'User',
+		}
+	}, { 
+        timestamps: true, 
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true }
+})
+```
     - User:
         - userSchema:
             - in addition to below properties, userSchema will contain subdocuments savedGamesSchema
@@ -295,10 +318,8 @@ Project planning guide. [^1]
     ```
 - [x] Model or Subdocument 2: 
     - example: ratingSchema
-    - additional: commentSchema, savedGamesSchema (became model during development process)
-        - savedGamesSchema to have {gameId: {type: Schema.Types.ObjectId, ref: 'Game'}}, {hasPlayed: {type: Boolean}}
-    ```
-    const ratingSchema = new Schema ({
+    ```javascript
+        const ratingSchema = new Schema ({
         rating: {
             type: Number, 
             required: true,
@@ -314,6 +335,51 @@ Project planning guide. [^1]
         timestamps: true
     })
     ```
+    - additional: commentSchema, savedGamesSchema (became model during development process)
+    ```javascript
+    const commentSchema = new Schema ({
+    note: {
+        type: String, 
+        required: true,
+    }, 
+    author: {
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true
+    }
+    }, {
+    timestamps: true
+    })
+    ```
+        - savedGamesSchema:
+    ```javascript
+    const savedGameSchema = new Schema ({
+    owner: {
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true
+    },
+    savedGameRef: {
+        type: Schema.Types.ObjectId,
+        ref: 'Game',
+        required: true
+    },
+    userCollection: {
+        type: String, 
+        default: 'My Saved Games',
+        required: true
+    },
+    hasPlayed: {
+        type: Boolean,
+        required: true,
+    },
+    }, {
+    timestamps: true
+    })
+    ```
+
+   
+
 - [x] API or Seed: Internal Steam Web API, minimum 1 user-created game
 - [x] Resource RESTful routes: SavedGames
 
@@ -368,18 +434,18 @@ Project planning guide. [^1]
 - [x] Evaluate readiness for deployment
 - [ ] Merge development branch(s) as needed with main
 
-**Sprint 5 (Est completion 1/29/23):**
+**Sprint 5 (Est completion Delayed 2/02/23):**
 - [ ] Deploy application
 - [ ] Conduct extensive testing
 - [ ] Conduct user acceptance testing
 - [ ] Address bugs, errors, feedback
-- [ ] Update README.md with all necessary requirements & information
-- [ ] Confirm all technical requirements & MVP completion
-- [ ] Submit project 2 per submission instructions
+- [x] Update README.md with all necessary requirements & information
+- [x] Confirm all technical requirements & MVP completion
+- [x] Submit project 2 per submission instructions
 
 **Final Deliverable (Est completion 1/30/23):**
-- [ ] Present deliverable to SEI Cohort & Instructors
-- [ ] Update documentation to incorporate feedback and development opportunities
+- [x] Present deliverable to SEI Cohort & Instructors
+- [x] Update documentation to incorporate feedback and development opportunities
 
 **Image & Icon sources**
 - Three Heart-shaped Red Stones Placed on Tic-tac-toe Game Bord: Photo by Pixabay from Pexels: https://www.pexels.com/photo/board-chalk-chalkboard-color-220057/ 
