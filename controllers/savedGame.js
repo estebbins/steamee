@@ -118,6 +118,7 @@ router.get('/:gameId', (req, res) => {
 	const gameId = req.params.gameId
 	SavedGame.findById(gameId)
         .populate('savedGameRef')
+        .populate('savedGameRef.comments', 'author.username')
 		.then(savedGame => {
             // Create variable for game for ease of use in liquid
             const game = savedGame.savedGameRef

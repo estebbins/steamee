@@ -45,6 +45,7 @@ This is a full-stack Node application designed to help users discover and sugges
 - generate error when adding a game that is not local co-op
 - share my user collections publicly or with specific users
 - see more store pages/platforms/media - such as boardgames, https://api-docs.igdb.com/#getting-started, PlayStation, Xbox, etc.
+- select from existing custom collection name
 
 ## Wireframes/Screenshots
 ![five_wireframes](assets/wireframes_ct_5.jpg)
@@ -111,7 +112,6 @@ This is a full-stack Node application designed to help users discover and sugges
 - On the Steam store screen, an API call will get a filtered list of Steam games to display as cards in the views. 
 - Users can "save" the game to their personal profile if they haven't already been saved, or can view the steamee game card, which will contain user ratings entered on steamee. If the user wants to dig deeper, they will with view (show route) the game and be able to see user comments. 
 - When users suggest a new game, a document will be created from the Game model.
-(diagrams that describe the relationships between your resources)
 - Eventually, the steamee view-all page will contain other games added by users, in addition to the ones that were saved directly from the steam store API call.
 - Example API Call: https://store.steampowered.com/search/results/?filter=category3=39&tags=3841&ignore_preferences=1&sort_by=Reviews_DESC&supportedlang=english&json=1
     - shared/split screen (category3=39)
@@ -258,9 +258,11 @@ RESULTS:
 - Leave comments and/or ratings on a game when you view the game from the "get steamee" section or when viewing from your profile of saved games
 
 ## Unsolved problems
-- Multiple of the same Steam game could be added. Had to remove the unique: true e of the steamId property in game model as multiple games with no steam ID were able to be added.
+- Multiple of the same Steam game could be added. Had to remove the unique: true of the steamId property in game model as multiple games with no steam ID were able to be added.
+- Deleting games from the game collection does not remove the game from saved games
 - Editing/deleting games from the game collection - this is meant to be an administrative task, shortterm work arounds are present
 - The Steam store API call is limited, therefore multiple API calls would make the store page more robust/dynamic
+- Author not populating on saved games show page for comments
 
 ## Project Requirements
 Project 2 overview. [^2]

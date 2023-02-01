@@ -8,11 +8,13 @@
             </div>
             <h3>Saved to: {{ savedGame.userCollection }}</h3>
             <hr>
+            {% comment %}
             {% if game.ratings.length > 0 %}
                 <h3>steamee score: <span class="score">{{ game.avgRating }}</span>/5</h3><small>({{ game.ratings.length }} rating(s))</small>
             {% else %}
                 <p><small>no ratings yet...</small></p>
             {% endif %}
+            {% endcomment %}
             {% if savedGame.owner == userId %}
                 {% if savedGame.hasPlayed %}
                     <h6>You have played this game in local coop before!</h6>
@@ -25,7 +27,9 @@
                         <input type="submit" value="Delete" class="btn delete" style="margin-left:0!important">
                     </form>
                 </div>
+            {% endif %}
         </article>
+        {% comment %}
         <article class="col-sm">
                 {% if game.comments.length > 0 %}
                     <h3>All Comments</h3>
@@ -38,6 +42,7 @@
                 {% endif %}
             {% endif %}
         </article>
+        {% endcomment %}
     </div>
 </div>
 {% endblock %}
