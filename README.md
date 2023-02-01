@@ -36,7 +36,7 @@ This is a full-stack Node application designed to help users discover and sugges
 - Update a saved game entry I made
 - view only my game entries & saved games
 - delete only my saved game entry
-###Development
+### Development
 - sort & the list by the steamee rating
 - see how many users have saved the game to their account
 - search & filter steamee games
